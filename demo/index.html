@@ -1,0 +1,896 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FIGUNI 맞춤 제작 데모 · 피규니</title>
+<meta name="description" content="一张照片，AI 生成专属白模，顾客在 DIY 店亲手上色完成。FIGUNI 피규니 定制流程演示。">
+<meta name="theme-color" content="#1F2A44">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FIGUNI 定制演示 · 피규니">
+<meta property="og:description" content="一张照片，AI 生成专属白模，顾客在 DIY 店亲手上色完成。FIGUNI 피규니 定制流程演示。">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Sans+SC:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+<style>
+/* Layout: a phone-sized app on a quiet stage; on desktop a short guide column sits beside it.
+   Palette: navy ink + coral action colour from the FIGUNI plan, cool paper neutrals, acrylic paint swatches as content. */
+:root{
+  --stage:#E9EDF2; --paper:#F5F7FA; --surface:#FFFFFF; --sunk:#EEF1F5;
+  --ink:#1F2A44; --muted:#667086; --line:#DCE1E9;
+  --accent:#F2643F; --accent-soft:#FDE9E2; --on-accent:#FFFFFF;
+  --teal:#13879A; --teal-soft:#DDF1F4; --ok:#2B8F5F; --ok-soft:#E1F3EA;
+  --shadow:0 18px 50px rgba(31,42,68,.16);
+  --p-caramel:#C9823F; --p-cream:#F2E4CC; --p-pink:#E8969A; --p-cocoa:#3A2A24;
+  --f-text:"Noto Sans SC","Noto Sans KR","PingFang SC","Microsoft YaHei",system-ui,sans-serif;
+  --f-brand:"Fredoka","Noto Sans SC",system-ui,sans-serif;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --stage:#0C1018; --paper:#121826; --surface:#1A2233; --sunk:#202a3d;
+  --ink:#E7ECF5; --muted:#9AA4B8; --line:#2B364B;
+  --accent:#FF7A57; --accent-soft:#3A2420; --on-accent:#1A0F0B;
+  --teal:#4CC0D0; --teal-soft:#16343B; --ok:#5CC48F; --ok-soft:#173327;
+  --shadow:0 18px 50px rgba(0,0,0,.45); color-scheme:dark }}
+:root[data-theme="dark"]{
+  --stage:#0C1018; --paper:#121826; --surface:#1A2233; --sunk:#202a3d;
+  --ink:#E7ECF5; --muted:#9AA4B8; --line:#2B364B;
+  --accent:#FF7A57; --accent-soft:#3A2420; --on-accent:#1A0F0B;
+  --teal:#4CC0D0; --teal-soft:#16343B; --ok:#5CC48F; --ok-soft:#173327;
+  --shadow:0 18px 50px rgba(0,0,0,.45); color-scheme:dark }
+
+html,body{height:100%}
+body{background:var(--stage);color:var(--ink);font-family:var(--f-text);font-size:14px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+*{box-sizing:border-box}
+button{font:inherit;color:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+.stage{min-height:100%;display:flex;gap:48px;align-items:center;justify-content:center;padding-block:28px}
+.intro{width:300px;flex:none;display:flex;flex-direction:column;gap:18px}
+.brand{color:inherit;text-decoration:none;font-family:var(--f-brand);font-weight:600;font-size:34px;letter-spacing:.01em;line-height:1}
+.brand small{font-family:var(--f-text);font-size:15px;font-weight:700;color:var(--accent);margin-left:8px;letter-spacing:0}
+.intro h1{font-size:20px;line-height:1.4;margin:0;text-wrap:balance}
+.intro p{margin:0;color:var(--muted)}
+.home-link{font-size:13px;font-weight:700;color:var(--ink);text-decoration:underline;text-underline-offset:4px}
+.steps-nav{display:flex;flex-direction:column;gap:2px;margin:0;padding:0;list-style:none}
+.steps-nav button{width:100%;text-align:left;border:0;background:none;padding:8px 10px;border-radius:10px;display:flex;gap:10px;align-items:center;color:var(--muted)}
+.steps-nav button:hover{background:var(--surface)}
+.steps-nav button[aria-current="true"]{background:var(--surface);color:var(--ink);font-weight:700}
+.steps-nav .n{font-family:var(--f-brand);width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-size:12px;background:var(--sunk);flex:none}
+.steps-nav button[aria-current="true"] .n{background:var(--accent);color:var(--on-accent)}
+.note{font-size:12px;color:var(--muted);border-top:1px solid var(--line);padding-top:12px}
+.lang{display:inline-flex;background:var(--sunk);border-radius:999px;padding:3px;gap:2px;align-self:flex-start}
+.lang button{border:0;background:none;padding:4px 12px;border-radius:999px;font-size:12px;font-weight:700;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--surface);color:var(--ink);box-shadow:0 1px 2px rgba(0,0,0,.08)}
+
+.phone{width:392px;max-width:100%;height:min(820px,calc(100vh - 56px));min-height:620px;background:var(--paper);border-radius:34px;box-shadow:var(--shadow);
+  border:8px solid var(--ink);position:relative;overflow:hidden;flex:none}
+.app{position:absolute;inset:0;display:flex;flex-direction:column}
+.appbar{flex:none;height:52px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid var(--line);background:var(--surface)}
+.appbar .logo{color:inherit;text-decoration:none;font-family:var(--f-brand);font-weight:600;font-size:20px}
+.appbar .logo span{color:var(--accent)}
+.appbar .back{border:0;background:none;padding:6px 8px;margin-left:-8px;border-radius:8px;font-size:13px;color:var(--muted)}
+.appbar .mini-lang{display:none}
+.screen{flex:1;overflow-y:auto;overflow-x:hidden;padding:16px 16px 24px;scroll-behavior:smooth}
+.tabs{flex:none;display:grid;grid-template-columns:repeat(3,1fr);border-top:1px solid var(--line);background:var(--surface);padding-bottom:env(safe-area-inset-bottom,0px)}
+.tabs button{border:0;background:none;padding:9px 0 10px;font-size:12px;color:var(--muted);display:flex;flex-direction:column;align-items:center;gap:3px}
+.tabs button svg{width:22px;height:22px}
+.tabs button[aria-current="page"]{color:var(--accent);font-weight:700}
+
+/* generic pieces */
+.progress{display:grid;grid-template-columns:repeat(5,1fr);gap:4px;margin-bottom:14px}
+.progress i{height:4px;border-radius:2px;background:var(--line)}
+.progress i.on{background:var(--accent)}
+.kicker{font-size:12px;color:var(--muted);letter-spacing:.04em}
+h2{font-size:19px;margin:2px 0 6px;line-height:1.35;text-wrap:balance}
+.lead{color:var(--muted);margin:0 0 14px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:16px;padding:14px}
+.stack{display:flex;flex-direction:column;gap:12px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.btn{border:0;border-radius:14px;padding:13px 16px;font-weight:700;font-size:15px;background:var(--accent);color:var(--on-accent);width:100%}
+.btn.ghost{background:var(--sunk);color:var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.chip{border:1px solid var(--line);background:var(--surface);border-radius:999px;padding:6px 12px;font-size:13px}
+.chip[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft);color:var(--accent);font-weight:700}
+.tag{display:inline-block;font-size:11px;padding:2px 8px;border-radius:999px;background:var(--sunk);color:var(--muted)}
+.tag.demo{background:var(--teal-soft);color:var(--teal);font-weight:700}
+.bar-bottom{position:sticky;bottom:-24px;margin:16px -16px -24px;padding:12px 16px;background:var(--paper);border-top:1px solid var(--line);display:flex;gap:10px;align-items:center;z-index:3}
+.bar-bottom .btn.ghost{white-space:nowrap;flex:none}
+.price{font-family:var(--f-brand);font-weight:600;font-size:22px;white-space:nowrap}
+.price small{font-family:var(--f-text);font-size:12px;color:var(--muted);font-weight:400;margin-left:2px}
+label.field{display:flex;flex-direction:column;gap:6px;font-size:13px;color:var(--muted)}
+input.text{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:12px;padding:10px 12px;font:inherit}
+
+/* landing */
+.hero{position:relative;background:var(--surface);border:1px solid var(--line);border-radius:22px;padding:18px 16px 0;overflow:hidden}
+.hero h2{font-size:22px}
+.hero img{display:block;width:88%;margin:4px auto 0}
+.hero .badge{position:absolute;right:14px;top:14px}
+.points{display:grid;gap:8px}
+.points div{display:flex;gap:10px;align-items:flex-start;font-size:13px}
+.points b{font-family:var(--f-brand);color:var(--accent);font-size:15px;min-width:38px;font-variant-numeric:tabular-nums}
+
+/* upload */
+.drop{border:2px dashed var(--line);border-radius:18px;padding:22px;text-align:center;background:var(--surface);display:flex;flex-direction:column;gap:10px;align-items:center}
+.drop .ico{width:46px;height:46px;border-radius:14px;background:var(--accent-soft);color:var(--accent);display:grid;place-items:center}
+.photo{position:relative;border-radius:18px;overflow:hidden;background:var(--sunk)}
+.photo img{display:block;width:100%}
+.photo .meta{position:absolute;left:10px;bottom:10px;background:rgba(15,20,30,.62);color:#fff;font-size:12px;padding:3px 9px;border-radius:999px}
+.upbar{height:6px;border-radius:3px;background:var(--sunk);overflow:hidden}
+.upbar i{display:block;height:100%;width:0;background:var(--accent);transition:width .9s ease}
+
+/* generating */
+.gen{display:flex;flex-direction:column;gap:12px;align-items:stretch}
+.gen .tool{font-size:12px;color:var(--muted)}
+.gen ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
+.gen li{display:flex;gap:10px;align-items:center;color:var(--muted)}
+.gen li .dot{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);flex:none;display:grid;place-items:center}
+.gen li.doing{color:var(--ink);font-weight:700}
+.gen li.doing .dot{border-color:var(--accent);border-top-color:transparent;animation:spin .8s linear infinite}
+.gen li.done{color:var(--ink)}
+.gen li.done .dot{border-color:var(--ok);background:var(--ok);color:#fff}
+.gen li.done .dot::after{content:"✓";font-size:11px;font-weight:700}
+@keyframes spin{to{transform:rotate(360deg)}}
+.shimmer{aspect-ratio:4/3;border-radius:16px;background:linear-gradient(100deg,var(--sunk) 30%,var(--surface) 50%,var(--sunk) 70%);background-size:300% 100%;animation:sh 1.3s linear infinite}
+@keyframes sh{to{background-position:-150% 0}}
+
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.cand{border:2px solid transparent;border-radius:16px;padding:0;overflow:hidden;background:var(--surface);position:relative}
+.cand img{display:block;width:100%;aspect-ratio:4/3.3;object-fit:cover}
+.cand[aria-pressed="true"]{border-color:var(--accent)}
+.cand[aria-pressed="true"]::after{content:"✓";position:absolute;right:8px;top:8px;width:24px;height:24px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-size:13px}
+.cand .lab{position:absolute;left:8px;bottom:8px;font-size:11px;background:rgba(15,20,30,.55);color:#fff;padding:1px 8px;border-radius:999px}
+
+/* 3D viewer */
+.viewer{position:relative;height:300px;border-radius:18px;background:radial-gradient(120% 90% at 50% 30%,var(--surface),var(--sunk));border:1px solid var(--line);overflow:hidden;touch-action:none}
+.viewer canvas{display:block;width:100%!important;height:100%!important}
+.viewer .hint{position:absolute;left:12px;bottom:10px;font-size:11px;color:var(--muted);pointer-events:none}
+.viewer .loading{position:absolute;inset:0;display:grid;place-items:center;color:var(--muted);font-size:13px}
+.seg{display:inline-flex;background:var(--sunk);border-radius:12px;padding:3px;gap:2px}
+.seg button{border:0;background:none;padding:7px 14px;border-radius:9px;font-size:13px;color:var(--muted)}
+.seg button[aria-pressed="true"]{background:var(--surface);color:var(--ink);font-weight:700;box-shadow:0 1px 2px rgba(0,0,0,.08)}
+.checks{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.checks div{display:flex;gap:8px;align-items:center;font-size:12.5px;background:var(--ok-soft);color:var(--ok);border-radius:10px;padding:8px 10px;font-weight:500}
+.pick{display:flex;gap:12px;align-items:center;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:10px 12px;min-height:64px}
+.pick.on{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-soft)}
+.pick .pick-empty{font-size:12.5px;color:var(--muted)}
+.pick .sw{width:40px;height:40px;border-radius:50%;flex:none;display:grid;place-items:center;font-family:var(--f-brand);font-weight:600;border:1px solid rgba(0,0,0,.08)}
+.pick b{display:block;font-size:14px}
+.pick span:not(.sw){display:block;font-size:12.5px}
+.pick small{display:block;font-size:11.5px;color:var(--muted)}
+.spec{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* plans */
+.plan{border:2px solid var(--line);background:var(--surface);border-radius:18px;padding:14px;text-align:left;display:flex;flex-direction:column;gap:6px;width:100%}
+.plan[aria-pressed="true"]{border-color:var(--accent)}
+.plan .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.plan h3{margin:0;font-size:16px}
+.plan p{margin:0;color:var(--muted);font-size:12.5px}
+.store{display:flex;justify-content:space-between;align-items:center;gap:10px;border:1px solid var(--line);background:var(--surface);border-radius:14px;padding:11px 12px;width:100%;text-align:left}
+.store[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.store b{display:block;font-size:14px}
+.store span{font-size:12px;color:var(--muted)}
+.store .km{font-variant-numeric:tabular-nums;font-size:12px;color:var(--muted);white-space:nowrap}
+
+/* order + guide */
+.sumrow{display:flex;justify-content:space-between;gap:12px;padding:7px 0;border-bottom:1px dashed var(--line);font-size:13px}
+.sumrow:last-child{border-bottom:0}
+.sumrow span:first-child{color:var(--muted)}
+.success{text-align:center;padding:8px 0 4px}
+.success .big{width:56px;height:56px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;margin:0 auto 8px;font-size:28px;font-weight:700}
+.timeline{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.timeline li{display:grid;grid-template-columns:20px 1fr auto;gap:10px;padding-bottom:12px;position:relative;font-size:13px}
+.timeline li::before{content:"";position:absolute;left:9px;top:18px;bottom:0;width:2px;background:var(--line)}
+.timeline li:last-child::before{display:none}
+.timeline .d{width:20px;height:20px;border-radius:50%;border:2px solid var(--line);background:var(--surface);z-index:1}
+.timeline li.done .d{background:var(--ok);border-color:var(--ok)}
+.timeline li.now .d{border-color:var(--accent);box-shadow:0 0 0 4px var(--accent-soft)}
+.timeline li.now b{color:var(--accent)}
+.timeline small{color:var(--muted);font-variant-numeric:tabular-nums}
+.palette{display:grid;gap:8px}
+.paint{display:grid;grid-template-columns:38px 1fr auto;gap:10px;align-items:center;text-align:left;border:1px solid transparent;background:none;border-radius:12px;padding:4px 6px;margin:0 -6px;width:calc(100% + 12px)}
+.paint:hover{background:var(--sunk)}
+.paint[aria-pressed="true"]{border-color:var(--accent);background:var(--accent-soft)}
+.paint .sw{width:38px;height:38px;border-radius:50%;position:relative;border:1px solid rgba(0,0,0,.08);display:grid;place-items:center;font-family:var(--f-brand);font-weight:600;font-size:14px}
+.paint b{font-size:13.5px}
+.paint span{display:block;font-size:12px;color:var(--muted)}
+.paint em{font-style:normal;font-size:12px;color:var(--muted);font-variant-numeric:tabular-nums}
+.tips{margin:0;padding-left:18px;display:flex;flex-direction:column;gap:4px;font-size:13px}
+
+/* community */
+.banner{display:flex;gap:8px;align-items:center;font-size:12px;color:var(--teal);background:var(--teal-soft);border-radius:12px;padding:8px 10px;margin-bottom:10px}
+.filters{display:flex;gap:6px;overflow-x:auto;padding-bottom:4px;margin:0 -16px 10px;padding-left:16px;padding-right:16px;scrollbar-width:none}
+.filters .chip{white-space:nowrap}
+.feed{columns:2;column-gap:10px}
+.post{break-inside:avoid;margin-bottom:10px;background:var(--surface);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:block;width:100%;padding:0;text-align:left}
+.post img{display:block;width:100%}
+.post .tc{padding:16px 12px;min-height:150px;display:flex;flex-direction:column;justify-content:space-between;gap:10px;font-weight:700;font-size:15px;line-height:1.4}
+.post .tc.event{background:var(--teal-soft);color:var(--teal)}
+.post .tc.tip{background:var(--accent-soft);color:var(--accent)}
+.post .tc.ask{background:var(--sunk);color:var(--ink)}
+.post .body{padding:8px 10px 10px;display:flex;flex-direction:column;gap:6px}
+.post .title{font-size:13px;font-weight:700;line-height:1.4;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.post .by{display:flex;justify-content:space-between;align-items:center;font-size:11.5px;color:var(--muted);gap:6px}
+.post .by .u{display:flex;align-items:center;gap:5px;min-width:0}
+.post .by .u span{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.av{width:20px;height:20px;border-radius:50%;flex:none;display:grid;place-items:center;font-size:10px;font-weight:700;color:#fff}
+.likes{display:flex;align-items:center;gap:3px;font-variant-numeric:tabular-nums;white-space:nowrap}
+.likes.on{color:var(--accent)}
+.swatches{display:flex;gap:6px}
+.swatches i{width:22px;height:22px;border-radius:50%;border:2px solid rgba(255,255,255,.7)}
+.fab{position:absolute;right:16px;bottom:72px;border:0;border-radius:999px;background:var(--accent);color:var(--on-accent);font-weight:700;padding:11px 16px;box-shadow:0 8px 20px rgba(242,100,63,.35);display:flex;gap:6px;align-items:center;z-index:5}
+
+/* sheet + toast */
+.sheet{position:absolute;inset:0;z-index:20;background:rgba(10,14,22,.45);display:flex;align-items:flex-end}
+.sheet .panel{background:var(--paper);width:100%;max-height:92%;border-radius:22px 22px 0 0;overflow-y:auto;padding:0 0 16px;animation:up .22s ease}
+@keyframes up{from{transform:translateY(30px);opacity:.6}}
+.sheet .head{position:sticky;top:0;background:var(--paper);display:flex;justify-content:space-between;align-items:center;padding:12px 16px;z-index:2;border-bottom:1px solid var(--line)}
+.sheet .x{border:0;background:var(--sunk);border-radius:50%;width:30px;height:30px}
+.gallery{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;gap:0;background:var(--sunk)}
+.gallery figure{margin:0;flex:0 0 100%;scroll-snap-align:start;position:relative}
+.gallery img{display:block;width:100%}
+.gallery figcaption{position:absolute;left:10px;top:10px;font-size:11px;background:rgba(15,20,30,.55);color:#fff;padding:2px 8px;border-radius:999px}
+.pbody{padding:12px 16px;display:flex;flex-direction:column;gap:10px}
+.pbody h3{margin:0;font-size:16px;line-height:1.4}
+.pbody p{margin:0;font-size:13.5px}
+.comments{display:flex;flex-direction:column;gap:10px;border-top:1px solid var(--line);padding-top:10px}
+.cm{display:grid;grid-template-columns:28px 1fr;gap:8px;font-size:13px}
+.cm .av{width:28px;height:28px;font-size:11px}
+.cm b{font-size:12px;color:var(--muted);font-weight:500;display:block}
+.cm .off{color:var(--accent);font-weight:700}
+.cbox{display:flex;gap:8px;padding:0 16px}
+.cbox input{flex:1;min-width:0}
+.cbox .btn{width:auto;padding:10px 14px;font-size:13px}
+.toast{position:absolute;left:50%;top:62px;transform:translateX(-50%);background:var(--ink);color:var(--paper);font-size:13px;padding:8px 14px;border-radius:999px;z-index:30;white-space:nowrap}
+.empty{text-align:center;color:var(--muted);padding:40px 10px;display:flex;flex-direction:column;gap:12px;align-items:center}
+
+@media (max-width: 860px){
+  .intro{display:none}
+  .stage{padding-block:0;align-items:stretch;height:100%;min-height:0}
+  .phone{width:100%;height:100%;min-height:0;border:0;border-radius:0;box-shadow:none}
+  body{padding-left:0;padding-right:0}
+  .appbar .mini-lang{display:inline-flex}
+  .screen{padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+}
+@media (prefers-reduced-motion: reduce){*{animation:none!important;transition:none!important}}
+</style>
+
+<div class="stage">
+  <aside class="intro" aria-label="演示说明">
+    <a class="brand" href="/">FIGUNI<small>피규니</small></a>
+    <h1 id="i-head"></h1>
+    <p id="i-sub"></p>
+    <div class="lang" role="group" aria-label="Language">
+      <button data-act="lang" data-v="kr" aria-pressed="true">한국어</button>
+      <button data-act="lang" data-v="cn" aria-pressed="false">中文</button>
+    </div>
+    <ul class="steps-nav" id="steps-nav"></ul>
+    <div class="note" id="i-note"></div>
+    <a class="home-link" id="i-home" href="/"></a>
+  </aside>
+
+  <div class="phone">
+    <div class="app">
+      <header class="appbar">
+        <div class="row" style="gap:6px"><button class="back" id="back" data-act="back" hidden></button><a class="logo" href="/" id="logo-home">FIGUNI<span>.</span></a></div>
+        <div class="lang mini-lang" role="group" aria-label="Language">
+          <button data-act="lang" data-v="kr" aria-pressed="true">한</button>
+          <button data-act="lang" data-v="cn" aria-pressed="false">中</button>
+        </div>
+        <span class="tag demo" id="demo-tag"></span>
+      </header>
+      <main class="screen" id="screen"></main>
+      <nav class="tabs" id="tabs"></nav>
+      <div class="sheet" id="sheet" hidden></div>
+      <div class="toast" id="toast" hidden></div>
+    </div>
+  </div>
+</div>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+ "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+let renderer, scene, camera, controls, model, host = null, loaded = false, mode = 'color', ro;
+const meshes = [];
+const COMPS = [{"part": 0, "cls": 0}, {"part": 1, "cls": 1}, {"part": 2, "cls": 2}, {"part": 3, "cls": 3}, {"part": 4, "cls": 3}, {"part": 5, "cls": 3}, {"part": 5, "cls": 3}, {"part": 6, "cls": 1}, {"part": 6, "cls": 1}, {"part": 7, "cls": 1}, {"part": 7, "cls": 1}, {"part": 8, "cls": 1}, {"part": 9, "cls": 3}, {"part": 9, "cls": 3}, {"part": 9, "cls": 3}, {"part": 9, "cls": 3}];
+const PAINT = [0xC9823F, 0xF2E4CC, 0xE8969A, 0x3A2A24];
+let partOf = null, mainMesh = null, overlay = null, overlayMat = null, picked = null, t0 = 0;
+fetch('assets/parts_b64.txt').then((r) => r.text()).then((b) => {
+  const bin = atob(b.trim()); partOf = new Uint8Array(bin.length);
+  for (let i = 0; i < bin.length; i++) partOf[i] = bin.charCodeAt(i);
+});
+function clearPick() { if (overlay) { overlay.parent.remove(overlay); overlay.geometry.dispose(); overlay = null; } picked = null; }
+function highlight(compIds, cls) {
+  clearPick();
+  if (!mainMesh || !partOf) return;
+  const g = mainMesh.geometry, idx = g.index, pos = g.attributes.position;
+  const want = new Set(compIds), out = [];
+  const nf = idx ? idx.count / 3 : pos.count / 3;
+  for (let f = 0; f < nf; f++) {
+    if (!want.has(partOf[f])) continue;
+    for (let k = 0; k < 3; k++) { const vi = idx ? idx.getX(f * 3 + k) : f * 3 + k; out.push(pos.getX(vi), pos.getY(vi), pos.getZ(vi)); }
+  }
+  const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(out, 3)); geo.computeVertexNormals();
+  overlayMat = mode === 'white'
+    ? new THREE.MeshStandardMaterial({ color: PAINT[cls], roughness: 0.55, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 })
+    : new THREE.MeshBasicMaterial({ color: 0xF2643F, transparent: true, opacity: 0.55, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2, depthWrite: false });
+  overlay = new THREE.Mesh(geo, overlayMat); mainMesh.add(overlay); picked = { compIds, cls }; t0 = performance.now();
+}
+const ray = new THREE.Raycaster(), ndc = new THREE.Vector2();
+let down = null;
+function onDown(e) { down = [e.clientX, e.clientY]; }
+function onUp(e) {
+  if (!down || !mainMesh || !partOf) return;
+  const moved = Math.hypot(e.clientX - down[0], e.clientY - down[1]); down = null;
+  if (moved > 6) return;
+  const r = renderer.domElement.getBoundingClientRect();
+  ndc.set(((e.clientX - r.left) / r.width) * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1);
+  ray.setFromCamera(ndc, camera);
+  const hit = ray.intersectObject(mainMesh, false)[0];
+  if (!hit) { clearPick(); window.FIG3D.onPick?.(null); return; }
+  const c = partOf[hit.faceIndex], info = COMPS[c];
+  controls.autoRotate = false;
+  highlight([c], info.cls);
+  window.FIG3D.onPick?.({ part: info.part, cls: info.cls });
+}
+const white = new THREE.MeshStandardMaterial({ color: 0xEDEAE3, roughness: 0.62, metalness: 0 });
+
+function size() {
+  if (!host) return;
+  const w = host.clientWidth || 300, h = host.clientHeight || 300;
+  renderer.setSize(w, h, false);
+  camera.aspect = w / h; camera.updateProjectionMatrix();
+}
+function apply() { meshes.forEach(([m, mat]) => { m.material = mode === 'white' ? white : mat; }); }
+function init() {
+  renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.05;
+  scene = new THREE.Scene();
+  camera = new THREE.PerspectiveCamera(30, 1, 0.01, 50);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x9aa0aa, 1.25));
+  const key = new THREE.DirectionalLight(0xfff4ea, 2.0); key.position.set(-2.2, 3, 2.6); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xe8f0ff, 0.9); rim.position.set(2.5, 1.5, -2.5); scene.add(rim);
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.enablePan = false; controls.autoRotate = true; controls.autoRotateSpeed = 1.4;
+  controls.minDistance = 1.4; controls.maxDistance = 4.5;
+  controls.addEventListener('start', () => { controls.autoRotate = false; });
+  renderer.domElement.addEventListener('pointerdown', onDown);
+  renderer.domElement.addEventListener('pointerup', onUp);
+  fetch('assets/shiba_glb.txt').then((r) => r.text()).then((b64) => {
+    const bin = atob(b64.trim()); const buf = new Uint8Array(bin.length);
+    for (let i = 0; i < bin.length; i++) buf[i] = bin.charCodeAt(i);
+    new GLTFLoader().parse(buf.buffer, '', onModel, (e) => console.error(e));
+  });
+  function onModel(g) {
+    model = g.scene;
+    const box = new THREE.Box3().setFromObject(model);
+    const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+    const k = 1.25 / Math.max(s.x, s.y, s.z);
+    model.scale.setScalar(k);
+    model.position.set(-c.x * k, -box.min.y * k - 0.42, -c.z * k);
+    model.traverse((o) => { if (o.isMesh) { meshes.push([o, o.material]); if (!mainMesh) mainMesh = o; } });
+    scene.add(model); loaded = true; apply();
+    document.querySelectorAll('.viewer .loading').forEach((e) => e.remove());
+  }
+  camera.position.set(-1.0, 0.55, 2.35); controls.target.set(0, 0, 0); controls.update();
+  ro = new ResizeObserver(size);
+  renderer.setAnimationLoop((t) => {
+    if (!(host && host.isConnected)) return;
+    if (overlay && overlayMat.transparent) overlayMat.opacity = 0.38 + 0.22 * Math.sin((t - t0) / 260);
+    controls.update(); renderer.render(scene, camera);
+  });
+}
+window.FIG3D = {
+  mount(el) {
+    if (!renderer) init();
+    host = el; el.appendChild(renderer.domElement); ro.disconnect(); ro.observe(el); size();
+    controls.autoRotate = true; clearPick();
+    if (loaded) el.querySelector('.loading')?.remove();
+  },
+  setMode(m) { mode = m; apply(); if (picked) highlight(picked.compIds, picked.cls); },
+  highlightClass(cls) {
+    const ids = COMPS.map((c, i) => (c.cls === cls ? i : -1)).filter((i) => i >= 0);
+    controls.autoRotate = false; highlight(ids, cls);
+  },
+  clear() { clearPick(); },
+  onPick: null,
+};
+window.dispatchEvent(new Event('fig3d-ready'));
+</script>
+
+<script>
+(() => {
+const A = 'assets/';
+const STR = {
+  cn: {
+    demo: '演示版', back: '返回', home: '返回 FIGUNI 官网', homeAria: 'FIGUNI 官网',
+    iHead: '一张照片，到一只亲手上色的专属手办',
+    iSub: '这是 FIGUNI 小程序的流程演示。AI 生成步骤用团队柴犬的实测结果代替，不调用真实接口。',
+    iNote: '演示素材：团队成员家柴犬照片、Nano Banana 效果图、Meshy 3D 模型（2026.10 实测）。社区帖子、门店和订单均为示例内容。',
+    tabs: ['定制', '社区', '订单'],
+    steps: ['上传照片', '选效果图', '3D 模型', '选方案', '确认订单'],
+    hHead: '把你家的毛孩子，变成亲手上色的专属手办',
+    hSub: '上传一张照片，AI 设计专属白模，再到合作 DIY 店照着配色卡亲手上色。',
+    hPoints: [['20', '分钟左右，从照片到可打印的 3D 模型'], ['4', '色专属配色卡 + 3D 上色指导，新手也能涂好'], ['149', '元起，含白模和门店上色体验']],
+    start: '开始定制', heroBadge: '团队柴犬样品',
+    s1t: '上传一张清晰的照片', s1s: '正脸或侧身都可以，毛色和花纹要看得清。',
+    pick: '选择照片', pickHint: '演示版只使用示例照片：团队成员家的柴犬“豆豆”',
+    uploading: '上传中…', uploaded: '照片已上传', photoMeta: '豆豆.jpg · 452 × 434',
+    name: '名字', kind: '要做的是', kinds: ['宠物', '原创角色', '家人'], style: '风格', styles: ['Q 版萌系', '写实', '动漫'],
+    next: '下一步', petName: '豆豆',
+    s2t: 'AI 正在设计 Q 版效果图', s2tool: 'Nano Banana · 实际约 10 分钟，演示已加速',
+    s2stages: ['识别宠物轮廓', '提取毛色与花纹', '生成 Q 版造型'],
+    s2done: '选一张最像豆豆的', s2s: '选中的效果图会作为 3D 建模的依据。', again: '换一批', confirmPic: '就用这张',
+    candLab: (i) => `方案 ${i}`,
+    s3t: 'AI 正在生成 3D 模型', s3tool: 'Meshy · 实际约 5 分钟，演示已加速',
+    s3stages: ['生成 3D 网格', '自动修复与减面', '可打印检查'],
+    s3done: '豆豆的 3D 模型', s3s: '拖动旋转查看。白模是寄到门店的样子，彩色是上色参考。',
+    vWhite: '白模', vColor: '上色参考', drag: '拖动旋转 · 点一下部位看该涂什么颜色', loading3d: '模型加载中…',
+    palT: '专属 4 色配色卡', palS: '点一种颜色，模型上会高亮所有涂这个颜色的地方。',
+    pickHint: '点模型上的任意部位，会高亮这一块并告诉你该用哪种颜色。', pickUse: (n) => `这一块涂 ${n}`, pickAll: '所有同色部位', pickArea: (p) => `这种颜色约占全身 ${p}`,
+    parts: ['身体、头顶和尾巴', '胸口、口鼻和四条腿', '舌头', '鼻头', '嘴巴', '眼睛', '耳朵内侧', '眉毛白斑', '后爪', '脚掌肉垫'],
+    checks: ['网格封闭，无孔洞', '最薄处 ≥ 1.2 mm', '无非流形边', '4 色上色分区'],
+    spec: ['6.2 万面', '10 × 6.7 × 7.5 cm'],
+    s4t: '选择你的方案', diyT: '白模 DIY · 到店上色', diyD: '含白模、专属配色卡、门店颜料和约 1.5 小时上色体验',
+    colT: '彩模到家', colD: '工厂上色完成，直接寄到家，适合送礼或不想动手',
+    size: '尺寸', storeT: '选择合作门店', storeNote: '示例门店', slotT: '到店时间',
+    stores: [['拼豆小屋 · 望京店', '周末有亲子场'], ['手作研究所 · 三里屯', '晚上营业到 22:00'], ['豆趣 DIY · 朝阳大悦城', '商场 5 层']],
+    slots: ['本周六 14:00', '本周六 16:30', '本周日 10:30'],
+    addrT: '收货地址', addr: '北京市朝阳区 ×× 路 ×× 号（示例）', eta: '预计 7 天送达',
+    cur: (n) => `¥${n}`, curSmall: '',
+    s5t: '确认订单', sum: ['作品', '方案', '尺寸', '门店', '时间', '收货', '预计'], itemName: '豆豆 · Q 版柴犬',
+    printDays: '下单后约 3 天到店', pay: '支付（演示）',
+    okT: '下单成功', okS: '白模打印好后会寄到门店，到时提醒你去上色。', orderNo: '订单号',
+    tlT: '订单进度', tl: [['设计确认', '刚刚'], ['工厂打印', '约 2 天'], ['质检与清洁', '约 0.5 天'], ['寄往门店', '约 1 天'], ['到店上色', '本周六 14:00'], ['完成，带回家', '']],
+    tlCol: [['设计确认', '刚刚'], ['工厂打印', '约 2 天'], ['工厂上色', '约 2 天'], ['质检与包装', '约 0.5 天'], ['寄送到家', '约 2 天'], ['签收', '']],
+    guideT: '专属上色指导', guideS: '按编号上色。点模型上的部位，或点下面的颜色，都会高亮对应区域。',
+    paints: [['焦糖', '身体、头顶、尾巴', '58%'], ['奶油', '胸口、口鼻、四条腿、耳朵内侧', '40%'], ['樱粉', '舌头', '<1%'], ['可可', '眼睛、鼻头、嘴巴、肉垫', '1%']],
+    tips: ['先涂大面积的浅色（② 奶油），再涂 ① 焦糖。', '每层干透约 10 分钟再涂下一层，交界处用细笔修边。', '最后用 0 号细笔点 ④ 眼睛和鼻头。'],
+    share: '完成后发布到社区', toOrders: '查看订单',
+    ordersT: '我的订单', noOrder: '还没有订单', goCreate: '去定制',
+    status: { print: '打印中' },
+    cBanner: '演示社区：以下帖子、用户和门店都是示例内容',
+    filters: ['全部', '宠物', '原创角色', '亲子', '门店活动', '教程'],
+    publish: '发布作品', myName: '我', comment: '写评论…', send: '发送', liked: '已点赞', posted: '已发布到社区',
+    official: '官方', before: '上色前', after: '上色后', storeTag: '门店', pubTitle: '豆豆的手办做好了！第一次上色，比想象中简单',
+    pubBody: '照片 → Q 版效果图 → 3D 白模，全程在小程序里完成。到店照着配色卡按编号涂，大概 1 个半小时。',
+    paid: '已支付（演示）',
+  },
+  kr: {
+    demo: '데모', back: '뒤로', home: 'FIGUNI 홈페이지로 돌아가기', homeAria: 'FIGUNI 홈페이지',
+    iHead: '사진 한 장에서, 내 손으로 칠한 나만의 피규어까지',
+    iSub: 'FIGUNI 미니프로그램의 흐름을 보여주는 데모입니다. AI 생성 단계는 팀이 시바견으로 직접 해 본 결과로 대신하며, 실제 API는 호출하지 않습니다.',
+    iNote: '데모 소재: 팀원 반려견 사진, Nano Banana 시안, Meshy 3D 모델(2026.10 실측). 커뮤니티 게시물·매장·주문은 모두 예시입니다.',
+    tabs: ['제작', '커뮤니티', '주문'],
+    steps: ['사진 업로드', '시안 선택', '3D 모델', '옵션 선택', '주문 확인'],
+    hHead: '우리 집 반려동물을, 내 손으로 칠하는 나만의 피규어로',
+    hSub: '사진을 올리면 AI가 맞춤 화이트 모델을 디자인하고, 제휴 DIY 공방에서 컬러 카드를 보며 직접 칠합니다.',
+    hPoints: [['20', '분 안팎, 사진에서 출력 가능한 3D 모델까지'], ['4', '색 전용 컬러 카드 + 3D 채색 가이드로 초보자도 쉽게'], ['49,000', '원부터, 화이트 모델과 공방 채색 체험 포함']],
+    start: '제작 시작', heroBadge: '팀 시바견 샘플',
+    s1t: '선명한 사진 한 장을 올려 주세요', s1s: '정면이나 옆모습 모두 좋아요. 털 색과 무늬가 잘 보이면 됩니다.',
+    pick: '사진 선택', pickHint: '데모에서는 예시 사진만 사용합니다: 팀원의 시바견 ‘두두’',
+    uploading: '업로드 중…', uploaded: '사진 업로드 완료', photoMeta: 'dudu.jpg · 452 × 434',
+    name: '이름', kind: '만들 대상', kinds: ['반려동물', '나만의 캐릭터', '가족'], style: '스타일', styles: ['SD 귀염', '실사', '애니메이션'],
+    next: '다음', petName: '두두',
+    s2t: 'AI가 SD 시안을 디자인하는 중', s2tool: 'Nano Banana · 실제 약 10분, 데모는 빠르게 진행',
+    s2stages: ['반려동물 윤곽 인식', '털 색과 무늬 추출', 'SD 스타일 생성'],
+    s2done: '두두와 가장 닮은 시안을 골라 주세요', s2s: '선택한 시안을 바탕으로 3D 모델을 만듭니다.', again: '다시 생성', confirmPic: '이걸로 할게요',
+    candLab: (i) => `시안 ${i}`,
+    s3t: 'AI가 3D 모델을 만드는 중', s3tool: 'Meshy · 실제 약 5분, 데모는 빠르게 진행',
+    s3stages: ['3D 메시 생성', '자동 보정과 면 수 줄이기', '출력 가능 여부 검사'],
+    s3done: '두두의 3D 모델', s3s: '드래그해서 돌려 보세요. 화이트는 공방으로 가는 모습, 컬러는 채색 참고용입니다.',
+    vWhite: '화이트', vColor: '채색 참고', drag: '드래그로 회전 · 부위를 탭하면 칠할 색을 알려 줘요', loading3d: '모델 불러오는 중…',
+    palT: '전용 4색 컬러 카드', palS: '색을 탭하면 모델에서 그 색을 칠할 부위가 모두 강조됩니다.',
+    pickHint: '모델의 아무 부위나 탭하면 그 부분이 강조되고, 어떤 색을 칠할지 알려 줍니다.', pickUse: (n) => `이 부분은 ${n}`, pickAll: '같은 색 부위 전체', pickArea: (p) => `이 색은 전체의 약 ${p}`,
+    parts: ['몸통·머리 위·꼬리', '가슴·주둥이·다리', '혀', '코', '입', '눈', '귀 안쪽', '눈썹 무늬', '뒷발', '발바닥 패드'],
+    checks: ['닫힌 메시, 구멍 없음', '가장 얇은 곳 ≥ 1.2 mm', '비다양체 모서리 없음', '4색 채색 구역'],
+    spec: ['6.2만 면', '10 × 6.7 × 7.5 cm'],
+    s4t: '옵션을 선택하세요', diyT: '화이트 DIY · 공방 채색', diyD: '화이트 모델, 전용 컬러 카드, 공방 물감과 약 1.5시간 채색 체험 포함',
+    colT: '컬러 완제품 배송', colD: '공장에서 채색까지 끝내 집으로 배송, 선물이나 직접 칠하기 어려운 분께',
+    size: '크기', storeT: '제휴 공방 선택', storeNote: '예시 공방', slotT: '방문 시간',
+    stores: [['비즈공방 · 성수점', '주말 가족 클래스'], ['손작업 연구소 · 홍대', '평일 22시까지 운영'], ['DIY 놀이터 · 왕십리역', '역사 3층']],
+    slots: ['이번 주 토 14:00', '이번 주 토 16:30', '이번 주 일 10:30'],
+    addrT: '배송지', addr: '서울시 성동구 ○○로 ○○(예시)', eta: '약 7일 후 도착',
+    cur: (n) => `${n.toLocaleString('ko-KR')}원`, curSmall: '',
+    s5t: '주문 확인', sum: ['작품', '옵션', '크기', '공방', '시간', '배송지', '예상'], itemName: '두두 · SD 시바견',
+    printDays: '주문 후 약 3일 뒤 공방 도착', pay: '결제(데모)',
+    okT: '주문 완료', okS: '화이트 모델이 출력되면 공방으로 보내고, 채색하러 갈 때 알려 드릴게요.', orderNo: '주문 번호',
+    tlT: '주문 진행', tl: [['디자인 확정', '방금'], ['공장 출력', '약 2일'], ['검수와 세척', '약 0.5일'], ['공방으로 발송', '약 1일'], ['공방에서 채색', '이번 주 토 14:00'], ['완성, 집으로', '']],
+    tlCol: [['디자인 확정', '방금'], ['공장 출력', '약 2일'], ['공장 채색', '약 2일'], ['검수와 포장', '약 0.5일'], ['택배 발송', '약 2일'], ['수령', '']],
+    guideT: '전용 채색 가이드', guideS: '번호 순서대로 칠하세요. 모델의 부위나 아래 색을 탭하면 해당 영역이 강조됩니다.',
+    paints: [['캐러멜', '몸통, 머리 위, 꼬리', '58%'], ['크림', '가슴, 주둥이, 다리, 귀 안쪽', '40%'], ['체리 핑크', '혀', '<1%'], ['코코아', '눈, 코, 입, 발바닥', '1%']],
+    tips: ['넓고 밝은 색(② 크림)을 먼저, 그다음 ① 캐러멜을 칠합니다.', '한 겹마다 약 10분 말린 뒤 다음 색을 칠하고, 경계는 가는 붓으로 다듬습니다.', '마지막으로 0호 붓으로 ④ 눈과 코를 찍어 줍니다.'],
+    share: '완성 후 커뮤니티에 올리기', toOrders: '주문 보기',
+    ordersT: '내 주문', noOrder: '아직 주문이 없어요', goCreate: '제작하러 가기',
+    status: { print: '출력 중' },
+    cBanner: '데모 커뮤니티: 아래 게시물·사용자·공방은 모두 예시입니다',
+    filters: ['전체', '반려동물', '나만의 캐릭터', '가족', '공방 이벤트', '채색 팁'],
+    publish: '작품 올리기', myName: '나', comment: '댓글 쓰기…', send: '보내기', liked: '좋아요', posted: '커뮤니티에 올렸어요',
+    official: '공식', before: '채색 전', after: '채색 후', storeTag: '공방', pubTitle: '두두 피규어 완성! 처음 칠해 봤는데 생각보다 쉬웠어요',
+    pubBody: '사진 → SD 시안 → 3D 화이트 모델까지 미니프로그램에서 끝냈어요. 공방에서 컬러 카드 번호대로 칠하니 1시간 반 정도 걸렸어요.',
+    paid: '결제 완료(데모)',
+  },
+};
+const PRICE = { cn: { diy: { 7: 149, 10: 189 }, col: { 7: 249, 10: 399 } }, kr: { diy: { 7: 49000, 10: 59000 }, col: { 7: 79000, 10: 119000 } } };
+const KM = ['1.2 km', '3.5 km', '5.1 km'];
+const PAINT_HEX = ['#C9823F', '#F2E4CC', '#E8969A', '#3A2A24'];
+
+/* example community posts (demo content, clearly labelled in the UI) */
+const POSTS = [
+  { id: 'p1', cat: 1, imgs: ['post_before.jpg', 'post_after.jpg'], av: '#C9823F', likes: 328,
+    u: { cn: '豆包麻麻', kr: '콩이맘' }, store: { cn: '拼豆小屋 · 望京店', kr: '비즈공방 · 성수점' },
+    t: { cn: '第一次给柴犬白模上色，1 小时 20 分钟搞定', kr: '시바견 화이트 모델 첫 채색, 1시간 20분 만에 완성' },
+    b: { cn: '照着配色卡按编号涂：先奶油、再焦糖，最后点眼睛。店员教了细笔怎么拿，比想象中简单很多。', kr: '컬러 카드 번호대로 크림 → 캐러멜 → 눈 순서로 칠했어요. 공방 선생님이 가는 붓 잡는 법을 알려 주셔서 생각보다 훨씬 쉬웠어요.' },
+    tags: { cn: ['#柴犬', '#到店DIY', '#10cm'], kr: ['#시바견', '#공방DIY', '#10cm'] },
+    c: [{ u: { cn: '阿福爸', kr: '후추아빠' }, av: '#3A2A24', t: { cn: '眼睛点得好有神！', kr: '눈이 정말 살아 있네요!' } },
+        { u: { cn: 'FIGUNI', kr: 'FIGUNI' }, off: 1, av: '#F2643F', t: { cn: '涂得很均匀。下次可以在毛色交界处薄涂一层过渡色，会更柔和。', kr: '아주 고르게 칠하셨어요. 다음엔 털 색 경계에 얇게 중간색을 올리면 더 부드러워져요.' } },
+        { u: { cn: 'Lin', kr: 'Lin' }, av: '#13879A', t: { cn: '求门店位置，周末想带朋友去', kr: '공방 위치 궁금해요, 주말에 친구랑 가 보고 싶어요' } }] },
+  { id: 'p2', cat: 1, imgs: ['black.jpg'], av: '#2E2724', likes: 512,
+    u: { cn: '黑柴阿福', kr: '블랙시바 후추' }, store: { cn: '手作研究所 · 三里屯', kr: '손작업 연구소 · 홍대' },
+    t: { cn: '黑柴配色也能做，店员帮我调了更深的底色', kr: '블랙 시바도 가능! 공방에서 더 진한 바탕색을 섞어 줬어요' },
+    b: { cn: '我家是黑柴，配色卡上的焦糖色换成了炭黑，眉毛和胸口的奶油色保留。', kr: '우리 아이는 블랙 시바라 캐러멜 대신 차콜을 쓰고, 눈썹과 가슴의 크림색은 그대로 뒀어요.' },
+    tags: { cn: ['#黑柴', '#自定义配色'], kr: ['#블랙시바', '#맞춤컬러'] },
+    c: [{ u: { cn: '豆包麻麻', kr: '콩이맘' }, av: '#C9823F', t: { cn: '黑柴好帅！', kr: '블랙 시바 너무 멋져요!' } }] },
+  { id: 'p3', cat: 1, imgs: ['white.jpg'], av: '#8C96A8', likes: 1204,
+    u: { cn: 'Momo 的家', kr: '모모네' }, store: { cn: '豆趣 DIY · 朝阳大悦城', kr: 'DIY 놀이터 · 왕십리역' },
+    t: { cn: '给去年离开的白柴 Momo 做了一只，放在书桌上', kr: '작년에 떠난 흰 시바 모모를 만들어 책상 위에 두었어요' },
+    b: { cn: '照片是 Momo 三岁时拍的。上色的时候一直在想她，做出来的表情和她很像。', kr: '모모가 세 살 때 찍은 사진으로 만들었어요. 칠하는 내내 모모 생각이 났고, 표정이 정말 닮게 나왔어요.' },
+    tags: { cn: ['#宠物纪念', '#白柴'], kr: ['#반려동물추모', '#흰시바'] },
+    c: [{ u: { cn: 'Lin', kr: 'Lin' }, av: '#13879A', t: { cn: '看哭了，Momo 一直都在', kr: '울컥했어요. 모모는 늘 곁에 있을 거예요' } }] },
+  { id: 'p4', cat: 3, imgs: ['red.jpg'], av: '#13879A', likes: 286,
+    u: { cn: '周末带娃', kr: '주말육아' }, store: { cn: '拼豆小屋 · 望京店', kr: '비즈공방 · 성수점' },
+    t: { cn: '带 8 岁女儿做了一只赤柴，她说要叫它“小橘”', kr: '8살 딸이랑 붉은 시바를 만들었어요. 이름은 ‘귤이’래요' },
+    b: { cn: '亲子场两只 7cm，同桌各涂一只。孩子专注了一个多小时，比刷平板强多了。', kr: '가족 클래스에서 7cm 두 개를 한 테이블에서 각자 칠했어요. 아이가 한 시간 넘게 집중해서 태블릿보다 훨씬 좋았어요.' },
+    tags: { cn: ['#亲子', '#7cm'], kr: ['#가족클래스', '#7cm'] },
+    c: [{ u: { cn: 'FIGUNI', kr: 'FIGUNI' }, off: 1, av: '#F2643F', t: { cn: '小橘好可爱！亲子场每周六都有，欢迎再来。', kr: '귤이 너무 귀여워요! 가족 클래스는 매주 토요일에 있어요.' } }] },
+  { id: 'p5', cat: 4, card: 'event', av: '#13879A', likes: 96,
+    u: { cn: '拼豆小屋 · 望京店', kr: '비즈공방 · 성수점' }, store: null,
+    t: { cn: '本周六 14:00 亲子上色场，还剩 6 个座位', kr: '이번 주 토 14:00 가족 채색 클래스, 6자리 남았어요' },
+    b: { cn: '含 7cm 白模 × 2、颜料和围裙，店员全程指导，约 1.5 小时。在小程序下单时选“亲子场”即可。', kr: '7cm 화이트 모델 2개, 물감, 앞치마 포함. 선생님이 처음부터 도와 드리며 약 1.5시간 걸려요. 미니프로그램에서 ‘가족 클래스’를 고르면 됩니다.' },
+    tags: { cn: ['#门店活动', '#亲子场'], kr: ['#공방이벤트', '#가족클래스'] }, c: [] },
+  { id: 'p6', cat: 5, card: 'tip', av: '#F2643F', off: 1, likes: 860,
+    u: { cn: 'FIGUNI', kr: 'FIGUNI' }, store: null,
+    t: { cn: '上色三步法：先浅后深、先大后小、最后点睛', kr: '채색 3단계: 밝은 색 → 어두운 색, 넓은 곳 → 좁은 곳, 마지막에 눈' },
+    b: { cn: '① 先涂大面积浅色，盖住白底；② 干透后涂深色，交界处用细笔修；③ 最后用 0 号笔点眼睛和鼻头。水性颜料，洗手就能洗掉。', kr: '① 넓고 밝은 색으로 흰 바탕을 덮고, ② 마른 뒤 어두운 색을 칠해 경계를 가는 붓으로 정리하고, ③ 마지막에 0호 붓으로 눈과 코를 찍어요. 수성 물감이라 손에 묻어도 물로 지워져요.' },
+    tags: { cn: ['#上色教程'], kr: ['#채색팁'] }, c: [] },
+  { id: 'p7', cat: 1, imgs: ['post_gift.jpg'], av: '#E8969A', likes: 642,
+    u: { cn: '小鹿不迷路', kr: '사슴이' }, store: null,
+    t: { cn: '把男朋友家的柴犬做成生日礼物，他直接愣住', kr: '남자친구네 시바견으로 생일 선물을 만들었더니 말을 잃었어요' },
+    b: { cn: '偷偷拿了他手机里的照片，选的彩模到家，礼盒包装很好看。', kr: '남자친구 휴대폰에서 몰래 사진을 골라 컬러 완제품으로 주문했어요. 선물 상자도 예뻐요.' },
+    tags: { cn: ['#生日礼物', '#彩模到家'], kr: ['#생일선물', '#컬러완제품'] },
+    c: [{ u: { cn: '黑柴阿福', kr: '블랙시바 후추' }, av: '#2E2724', t: { cn: '这个礼物太有心了', kr: '정성 가득한 선물이네요' } }] },
+  { id: 'p8', cat: 2, card: 'ask', av: '#7A6FD6', likes: 74,
+    u: { cn: '画手阿柒', kr: '그림쟁이 칠이' }, store: null,
+    t: { cn: '原创角色能做吗？想把我的 OC 做成 10cm', kr: '나만의 캐릭터도 되나요? 제 OC를 10cm로 만들고 싶어요' },
+    b: { cn: '有三视图和设定图，不是宠物也可以吗？', kr: '삼면도와 설정화가 있는데, 반려동물이 아니어도 가능한가요?' },
+    tags: { cn: ['#原创角色', '#提问'], kr: ['#나만의캐릭터', '#질문'] },
+    c: [{ u: { cn: 'FIGUNI', kr: 'FIGUNI' }, off: 1, av: '#F2643F', t: { cn: '可以！上传设定图后选“原创角色”，有三视图效果更好。', kr: '가능해요! 설정화를 올리고 ‘나만의 캐릭터’를 선택하세요. 삼면도가 있으면 더 정확해요.' } }] },
+];
+
+const S = {
+  lang: 'kr', tab: 'create', step: 0,
+  photo: 0, // 0 none, 1 uploading, 2 done
+  kind: 0, style: 0, gen2: 0, cand: null, gen3: 0, view: 'color',
+  route: 'diy', size: 10, store: 0, slot: 0, order: null,
+  filter: 0, liked: {}, extra: {}, myPosts: [],
+};
+try { if (sessionStorage.getItem('figuni-lang') === 'cn') S.lang = 'cn'; } catch (e) {}
+
+const $ = (s, r = document) => r.querySelector(s);
+const T = () => STR[S.lang];
+const L = (o) => (o && typeof o === 'object' && 'cn' in o ? o[S.lang] : o);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const money = (n) => T().cur(n);
+let timers = [];
+const later = (fn, ms) => { const id = setTimeout(fn, ms); timers.push(id); };
+const clearTimers = () => { timers.forEach(clearTimeout); timers = []; };
+
+const ICON = {
+  create: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3.5c3.6 0 6.5 2.6 6.5 6 0 2.4-1.5 4.2-3.3 5.2l.8 4.8-4-2.4-4 2.4.8-4.8C7 13.7 5.5 11.9 5.5 9.5c0-3.4 2.9-6 6.5-6Z"/><circle cx="9.7" cy="9.3" r=".9" fill="currentColor"/><circle cx="14.3" cy="9.3" r=".9" fill="currentColor"/></svg>',
+  community: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3.5" y="4" width="7" height="9" rx="2"/><rect x="13.5" y="4" width="7" height="5" rx="2"/><rect x="3.5" y="15.5" width="7" height="4.5" rx="2"/><rect x="13.5" y="11.5" width="7" height="8.5" rx="2"/></svg>',
+  orders: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3.5h12v17l-3-2-3 2-3-2-3 2z"/><path d="M9 8.5h6M9 12h6"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg>',
+  heartO: '<svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20.5s-7.5-4.6-7.5-10.2A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.7c0 5.6-7.5 10.2-7.5 10.2Z"/></svg>',
+  upload: '<svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 16V5M7.5 9.5 12 5l4.5 4.5"/><path d="M5 15.5v2.5a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-2.5"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+};
+
+function progress() { return `<div class="progress" aria-label="${esc(T().steps[S.step - 1] || '')}">${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= S.step ? 'on' : ''}"></i>`).join('')}</div>`; }
+function stepHead(k, title, sub) { return `${progress()}<div class="kicker">${S.step} / 5 · ${esc(T().steps[S.step - 1])}</div><h2>${esc(title)}</h2>${sub ? `<p class="lead">${esc(sub)}</p>` : ''}`; }
+function genList(stages, n) {
+  return `<ol>${stages.map((s, i) => `<li class="${i < n ? 'done' : i === n ? 'doing' : ''}"><span class="dot"></span>${esc(s)}</li>`).join('')}</ol>`;
+}
+
+/* ---------- create flow screens ---------- */
+function vLanding() {
+  const t = T();
+  return `<div class="stack">
+    <section class="hero">
+      <span class="tag badge">${esc(t.heroBadge)}</span>
+      <div class="brand" style="font-size:26px">FIGUNI<small>피규니</small></div>
+      <h2 style="margin-top:8px">${esc(t.hHead)}</h2>
+      <p class="lead" style="margin:0">${esc(t.hSub)}</p>
+      <img src="${A}hero.png" alt="">
+    </section>
+    <div class="card points">${t.hPoints.map(([n, s]) => `<div><b>${esc(n)}</b><span>${esc(s)}</span></div>`).join('')}</div>
+    <button class="btn" data-act="go" data-v="1">${esc(t.start)}</button>
+  </div>`;
+}
+function vUpload() {
+  const t = T();
+  const chips = (arr, key) => `<div class="row">${arr.map((s, i) => `<button class="chip" data-act="set" data-k="${key}" data-v="${i}" aria-pressed="${S[key] === i}">${esc(s)}</button>`).join('')}</div>`;
+  let body;
+  if (S.photo === 0) {
+    body = `<div class="drop"><div class="ico">${ICON.upload}</div><button class="btn" style="width:auto;padding:11px 22px" data-act="upload">${esc(t.pick)}</button><span style="font-size:12px;color:var(--muted)">${esc(t.pickHint)}</span></div>`;
+  } else {
+    body = `<div class="photo"><img src="${A}photo.jpg" alt=""><span class="meta">${esc(t.photoMeta)}</span></div>
+      <div class="upbar"><i id="upbar" style="width:${S.photo === 2 ? 100 : 0}%"></i></div>
+      <div style="font-size:12px;color:${S.photo === 2 ? 'var(--ok)' : 'var(--muted)'}">${esc(S.photo === 2 ? '✓ ' + t.uploaded : t.uploading)}</div>`;
+  }
+  return `${stepHead(1, t.s1t, t.s1s)}<div class="stack">${body}
+    <label class="field">${esc(t.name)}<input class="text" id="pet-name" value="${esc(t.petName)}"></label>
+    <div class="field"><span style="font-size:13px;color:var(--muted)">${esc(t.kind)}</span>${chips(t.kinds, 'kind')}</div>
+    <div class="field"><span style="font-size:13px;color:var(--muted)">${esc(t.style)}</span>${chips(t.styles, 'style')}</div>
+    <div class="bar-bottom"><button class="btn" data-act="go" data-v="2" ${S.photo === 2 ? '' : 'disabled'}>${esc(t.next)}</button></div></div>`;
+}
+function vCand() {
+  const t = T();
+  if (S.gen2 < 3) {
+    return `${stepHead(2, t.s2t)}<div class="gen"><div class="tool">${esc(t.s2tool)}</div>${genList(t.s2stages, S.gen2)}
+      <div class="grid2">${[1, 2, 3, 4].map(() => '<div class="shimmer"></div>').join('')}</div></div>`;
+  }
+  return `${stepHead(2, t.s2done, t.s2s)}<div class="stack"><div class="grid2">${[1, 2, 3, 4].map((i) =>
+    `<button class="cand" data-act="cand" data-v="${i}" aria-pressed="${S.cand === i}"><img src="${A}cand${i}.jpg" alt="${esc(t.candLab(i))}"><span class="lab">${esc(t.candLab(i))}</span></button>`).join('')}</div>
+    <div class="bar-bottom"><button class="btn ghost" style="width:auto" data-act="regen">${esc(t.again)}</button><button class="btn" data-act="go" data-v="3" ${S.cand ? '' : 'disabled'}>${esc(t.confirmPic)}</button></div></div>`;
+}
+function viewerBlock(withToggle = true) {
+  const t = T();
+  return `<div class="viewer" id="viewer"><div class="loading">${esc(t.loading3d)}</div><span class="hint">${esc(t.drag)}</span></div>
+    <div class="pick" id="pick" aria-live="polite">${pickCard()}</div>
+    ${withToggle ? `<div class="row" style="justify-content:center"><div class="seg" role="group"><button data-act="view" data-v="white" aria-pressed="${S.view === 'white'}">${esc(t.vWhite)}</button><button data-act="view" data-v="color" aria-pressed="${S.view === 'color'}">${esc(t.vColor)}</button></div></div>` : ''}`;
+}
+function palette() {
+  const t = T();
+  return `<div class="card palette">${t.paints.map(([n, w, p], i) => `<button class="paint" data-act="paint" data-v="${i}" aria-pressed="false"><span class="sw" style="background:${PAINT_HEX[i]};color:${i === 3 ? '#fff' : '#3A2A24'}">${i + 1}</span><div><b>${esc(n)}</b><span>${esc(w)}</span></div><em>${esc(p)}</em></button>`).join('')}</div>`;
+}
+function pickCard() {
+  const t = T(), p = S.pick;
+  if (!p) return `<div class="pick-empty">${esc(t.pickHint)}</div>`;
+  const [name, , share] = t.paints[p.cls];
+  const title = p.part == null ? t.pickAll : t.parts[p.part];
+  return `<span class="sw" style="background:${PAINT_HEX[p.cls]};color:${p.cls === 3 ? '#fff' : '#3A2A24'}">${p.cls + 1}</span>
+    <div style="min-width:0"><b>${esc(title)}</b><span>${esc(t.pickUse(`${'①②③④'[p.cls]} ${name}`))} · ${PAINT_HEX[p.cls]}</span><small>${esc(t.pickArea(share))}</small></div>`;
+}
+function showPick(p) {
+  S.pick = p; const el = $('#pick');
+  if (el) { el.innerHTML = pickCard(); el.classList.toggle('on', !!p); }
+  document.querySelectorAll('.paint').forEach((r) => r.setAttribute('aria-pressed', !!p && p.part == null && +r.dataset.v === p.cls));
+}
+function vModel() {
+  const t = T();
+  if (S.gen3 < 3) {
+    return `${stepHead(3, t.s3t)}<div class="gen"><div class="tool">${esc(t.s3tool)}</div>${genList(t.s3stages, S.gen3)}
+      <div class="row" style="gap:10px;align-items:stretch"><img src="${A}cand${S.cand || 1}.jpg" alt="" style="width:46%;border-radius:14px"><div class="shimmer" style="flex:1;aspect-ratio:auto"></div></div></div>`;
+  }
+  return `${stepHead(3, t.s3done.replace(/豆豆|두두/, $('#pet-name')?.value || t.petName), t.s3s)}<div class="stack">${viewerBlock()}
+    <div><b>${esc(T().palT)}</b><div style="font-size:12px;color:var(--muted)">${esc(T().palS)}</div></div>
+    ${palette()}
+    <div class="checks">${t.checks.map((c) => `<div>✓ ${esc(c)}</div>`).join('')}</div>
+    <div class="spec"><span>${esc(t.spec[0])}</span><span>${esc(t.spec[1])}</span></div>
+    <div class="bar-bottom"><button class="btn" data-act="go" data-v="4">${esc(t.next)}</button></div></div>`;
+}
+function vPlan() {
+  const t = T(), P = PRICE[S.lang];
+  const plan = (k, title, desc) => `<button class="plan" data-act="set" data-k="route" data-v="${k}" aria-pressed="${S.route === k}">
+    <div class="top"><h3>${esc(title)}</h3><span class="price" style="font-size:17px">${money(P[k][7])}<small>–${money(P[k][10])}</small></span></div><p>${esc(desc)}</p></button>`;
+  const stores = S.route === 'diy' ? `<div class="stack" style="gap:8px"><div class="row" style="justify-content:space-between"><b>${esc(t.storeT)}</b><span class="tag">${esc(t.storeNote)}</span></div>
+      ${t.stores.map(([n, d], i) => `<button class="store" data-act="set" data-k="store" data-v="${i}" aria-pressed="${S.store === i}"><div><b>${esc(n)}</b><span>${esc(d)}</span></div><span class="km">${KM[i]}</span></button>`).join('')}
+      <b style="margin-top:4px">${esc(t.slotT)}</b><div class="row">${t.slots.map((s, i) => `<button class="chip" data-act="set" data-k="slot" data-v="${i}" aria-pressed="${S.slot === i}">${esc(s)}</button>`).join('')}</div></div>`
+    : `<div class="card"><b>${esc(t.addrT)}</b><div style="color:var(--muted);font-size:13px">${esc(t.addr)}</div><div style="font-size:12px;color:var(--teal);margin-top:4px">${esc(t.eta)}</div></div>`;
+  return `${stepHead(4, t.s4t)}<div class="stack">${plan('diy', t.diyT, t.diyD)}${plan('col', t.colT, t.colD)}
+    <div class="row" style="justify-content:space-between"><b>${esc(t.size)}</b><div class="seg" role="group">${[7, 10].map((n) => `<button data-act="set" data-k="size" data-v="${n}" aria-pressed="${S.size === n}">${n} cm</button>`).join('')}</div></div>
+    ${stores}
+    <div class="bar-bottom"><span class="price">${money(P[S.route][S.size])}</span><button class="btn" data-act="go" data-v="5">${esc(t.next)}</button></div></div>`;
+}
+function summaryRows() {
+  const t = T(), P = PRICE[S.lang], diy = S.route === 'diy';
+  const rows = [[t.sum[0], t.itemName.replace(/豆豆|두두/, $('#pet-name')?.value || S.order?.name || t.petName)], [t.sum[1], diy ? t.diyT : t.colT], [t.sum[2], `${S.size} cm`]];
+  if (diy) rows.push([t.sum[3], t.stores[S.store][0]], [t.sum[4], t.slots[S.slot]], [t.sum[6], t.printDays]);
+  else rows.push([t.sum[5], t.addr], [t.sum[6], t.eta]);
+  return rows.map(([a, b]) => `<div class="sumrow"><span>${esc(a)}</span><span style="text-align:right">${esc(b)}</span></div>`).join('');
+}
+function vConfirm() {
+  const t = T(), P = PRICE[S.lang];
+  return `${stepHead(5, t.s5t)}<div class="stack"><div class="card row" style="gap:12px;flex-wrap:nowrap"><img src="${A}cand${S.cand || 1}.jpg" alt="" style="width:92px;border-radius:12px;flex:none"><div style="min-width:0"><b>${esc(t.itemName)}</b><div style="font-size:12px;color:var(--muted)">${esc(t.checks[3])} · ${esc(t.spec[1])}</div></div></div>
+    <div class="card">${summaryRows()}</div>
+    <div class="bar-bottom"><span class="price">${money(P[S.route][S.size])}</span><button class="btn" data-act="pay">${esc(t.pay)}</button></div></div>`;
+}
+function timeline(o) {
+  const t = T(); const list = o.route === 'diy' ? t.tl : t.tlCol;
+  return `<ol class="timeline">${list.map(([a, b], i) => `<li class="${i === 0 ? 'done' : i === 1 ? 'now' : ''}"><span class="d"></span><b>${esc(a)}</b><small>${esc(i === 4 && o.route === 'diy' ? t.slots[o.slot] : b)}</small></li>`).join('')}</ol>`;
+}
+function guide() {
+  const t = T();
+  return `<div class="stack"><div><h2 style="margin-bottom:2px">${esc(t.guideT)}</h2><p class="lead" style="margin:0">${esc(t.guideS)}</p></div>
+    ${viewerBlock(false)}
+    ${palette()}
+    <ol class="tips">${t.tips.map((x) => `<li>${esc(x)}</li>`).join('')}</ol></div>`;
+}
+function vDone() {
+  const t = T(), o = S.order;
+  return `<div class="stack"><div class="success"><div class="big">✓</div><h2>${esc(t.okT)}</h2><p class="lead" style="margin:0">${esc(t.okS)}</p>
+      <div style="font-size:12px;color:var(--muted);margin-top:6px">${esc(t.orderNo)} ${o.no}</div></div>
+    <div class="card"><b>${esc(t.tlT)}</b><div style="margin-top:10px">${timeline(o)}</div></div>
+    ${guide()}
+    <button class="btn" data-act="share">${esc(t.share)}</button>
+    <button class="btn ghost" data-act="tab" data-v="orders">${esc(t.toOrders)}</button></div>`;
+}
+
+/* ---------- orders ---------- */
+function vOrders() {
+  const t = T(), o = S.order;
+  if (!o) return `<h2>${esc(t.ordersT)}</h2><div class="empty"><span>${esc(t.noOrder)}</span><button class="btn" style="width:auto" data-act="tab" data-v="create">${esc(t.goCreate)}</button></div>`;
+  const P = PRICE[S.lang];
+  return `<h2>${esc(t.ordersT)}</h2><div class="stack"><div class="card stack" style="gap:10px">
+      <div class="row" style="justify-content:space-between"><span style="font-size:12px;color:var(--muted)">${esc(t.orderNo)} ${o.no}</span><span class="tag" style="background:var(--accent-soft);color:var(--accent);font-weight:700">${esc(t.status.print)}</span></div>
+      <div class="row" style="gap:12px;flex-wrap:nowrap"><img src="${A}cand${o.cand}.jpg" alt="" style="width:80px;border-radius:12px;flex:none"><div style="min-width:0"><b>${esc(t.itemName)}</b><div style="font-size:12px;color:var(--muted)">${esc(o.route === 'diy' ? t.diyT : t.colT)} · ${o.size} cm</div><div class="price" style="font-size:17px">${money(P[o.route][o.size])} <small>${esc(t.paid)}</small></div></div></div>
+      ${timeline(o)}</div>${o.route === 'diy' ? guide() : ''}</div>`;
+}
+
+/* ---------- community ---------- */
+function allPosts() { return [...S.myPosts, ...POSTS]; }
+function likeCount(p) { return p.likes + (S.liked[p.id] ? 1 : 0); }
+function avatar(name, col) { return `<span class="av" style="background:${col}">${esc(String(name).trim().slice(0, 1))}</span>`; }
+function cover(p) {
+  const t = T();
+  if (p.imgs) return `<img src="${A}${p.imgs[p.imgs.length - 1]}" alt="" loading="lazy">`;
+  const extra = p.card === 'tip' ? `<div class="swatches">${PAINT_HEX.map((h) => `<i style="background:${h}"></i>`).join('')}</div>` : `<span style="font-size:12px;font-weight:500;opacity:.85">${esc(p.card === 'event' ? t.filters[4] : t.filters[2])}</span>`;
+  return `<div class="tc ${p.card}"><span>${esc(L(p.t))}</span>${extra}</div>`;
+}
+function vCommunity() {
+  const t = T();
+  const list = allPosts().filter((p) => S.filter === 0 || p.cat === S.filter);
+  return `<div class="banner">ⓘ ${esc(t.cBanner)}</div>
+    <div class="filters" role="group">${t.filters.map((f, i) => `<button class="chip" data-act="filter" data-v="${i}" aria-pressed="${S.filter === i}">${esc(f)}</button>`).join('')}</div>
+    <div class="feed">${list.map((p) => `<button class="post" data-act="open" data-v="${p.id}">${cover(p)}
+      <div class="body">${p.imgs ? `<div class="title">${esc(L(p.t))}</div>` : ''}<div class="by"><span class="u">${avatar(L(p.u), p.av)}<span>${esc(L(p.u))}${p.off ? ` · ${esc(t.official)}` : ''}</span></span>
+      <span class="likes ${S.liked[p.id] ? 'on' : ''}">${S.liked[p.id] ? ICON.heart : ICON.heartO}${likeCount(p)}</span></div></div></button>`).join('')}</div>`;
+}
+function openPost(id) {
+  const t = T(), p = allPosts().find((x) => x.id === id); if (!p) return;
+  const comments = [...p.c, ...(S.extra[id] || [])];
+  const gal = p.imgs ? `<div class="gallery">${p.imgs.map((im, i) => `<figure><img src="${A}${im}" alt="">${p.imgs.length > 1 ? `<figcaption>${esc(i === 0 ? t.before : t.after)} · ${i + 1}/${p.imgs.length}</figcaption>` : ''}</figure>`).join('')}</div>`
+    : `<div style="padding:0 16px">${cover(p)}</div>`;
+  $('#sheet').innerHTML = `<div class="panel" role="dialog" aria-modal="true">
+    <div class="head"><span class="row" style="gap:8px">${avatar(L(p.u), p.av)}<b style="font-size:14px">${esc(L(p.u))}</b>${p.off ? `<span class="tag" style="color:var(--accent);background:var(--accent-soft)">${esc(t.official)}</span>` : ''}</span><button class="x" data-act="close" aria-label="close">✕</button></div>
+    ${gal}
+    <div class="pbody"><h3>${esc(L(p.t))}</h3><p>${esc(L(p.b))}</p>
+      <div class="row">${(L(p.tags) || []).map((g) => `<span class="tag">${esc(g)}</span>`).join('')}${p.store ? `<span class="tag" style="background:var(--teal-soft);color:var(--teal)">${esc(t.storeTag)} · ${esc(L(p.store))}</span>` : ''}</div>
+      <div class="row" style="justify-content:space-between"><span class="tag demo">${esc(t.demo)}</span><button class="chip" data-act="like" data-v="${p.id}" aria-pressed="${!!S.liked[p.id]}">${S.liked[p.id] ? ICON.heart : ICON.heartO} ${likeCount(p)}</button></div>
+      <div class="comments">${comments.map((c) => `<div class="cm">${avatar(L(c.u), c.av)}<div><b class="${c.off ? 'off' : ''}">${esc(L(c.u))}${c.off ? ` · ${esc(t.official)}` : ''}</b>${esc(L(c.t))}</div></div>`).join('') || ''}</div></div>
+    <form class="cbox" data-post="${p.id}"><input class="text" id="cinput" placeholder="${esc(t.comment)}" autocomplete="off"><button class="btn" type="submit">${esc(t.send)}</button></form></div>`;
+  $('#sheet').hidden = false;
+  $('#sheet').dataset.post = id;
+}
+
+/* ---------- render ---------- */
+function render() {
+  const t = T();
+  document.documentElement.lang = S.lang === 'cn' ? 'zh-CN' : 'ko';
+  document.title = S.lang === 'cn' ? 'FIGUNI 定制演示 · 피규니' : 'FIGUNI 맞춤 제작 데모 · 피규니';
+  $('#i-head').textContent = t.iHead; $('#i-sub').textContent = t.iSub; $('#i-note').textContent = t.iNote;
+  $('#demo-tag').textContent = t.demo; $('#i-home').textContent = t.home; $('#logo-home').setAttribute('aria-label', t.homeAria);
+  document.querySelectorAll('[data-act="lang"]').forEach((b) => b.setAttribute('aria-pressed', b.dataset.v === S.lang));
+  $('#steps-nav').innerHTML = [t.start, ...t.steps].map((s, i) => `<li><button data-act="jump" data-v="${i}" aria-current="${S.tab === 'create' && Math.min(S.step, 5) === i}"><span class="n">${i}</span>${esc(s)}</button></li>`).join('')
+    + `<li><button data-act="tab" data-v="community" aria-current="${S.tab === 'community'}"><span class="n">★</span>${esc(t.tabs[1])}</button></li>`;
+  $('#tabs').innerHTML = [['create', ICON.create], ['community', ICON.community], ['orders', ICON.orders]].map(([k, ic], i) =>
+    `<button data-act="tab" data-v="${k}" aria-current="${S.tab === k ? 'page' : 'false'}">${ic}${esc(t.tabs[i])}</button>`).join('');
+  const back = $('#back');
+  back.hidden = !(S.tab === 'create' && S.step > 0 && S.step < 6);
+  back.textContent = '‹ ' + t.back;
+  let html;
+  if (S.tab === 'community') html = vCommunity() + `<button class="fab" data-act="compose">${ICON.plus}${esc(t.publish)}</button>`;
+  else if (S.tab === 'orders') html = vOrders();
+  else html = [vLanding, vUpload, vCand, vModel, vPlan, vConfirm, vDone][S.step]();
+  const scr = $('#screen');
+  const name = $('#pet-name')?.value;
+  scr.innerHTML = html;
+  if (name && $('#pet-name')) $('#pet-name').value = name;
+  const v = $('#viewer');
+  if (v) {
+    S.pick = null; if ($('#pick')) $('#pick').innerHTML = pickCard();
+    const mount = () => { window.FIG3D.onPick = showPick; window.FIG3D.mount(v); window.FIG3D.setMode(S.step === 3 && S.tab === 'create' ? S.view : 'color'); };
+    if (window.FIG3D) mount(); else window.addEventListener('fig3d-ready', mount, { once: true });
+  }
+}
+function go(step) {
+  clearTimers();
+  S.tab = 'create'; S.step = step;
+  if (step === 2 && S.gen2 < 3) runGen('gen2', 2);
+  if (step === 3 && S.gen3 < 3) runGen('gen3', 3);
+  render(); $('#screen').scrollTop = 0;
+}
+function runGen(key, step) {
+  S[key] = 0;
+  const tick = () => { if (S.step !== step || S.tab !== 'create') return; S[key]++; render(); if (S[key] < 3) later(tick, 900); };
+  later(tick, 900);
+}
+function toast(msg) { const el = $('#toast'); el.textContent = msg; el.hidden = false; clearTimeout(toast.id); toast.id = setTimeout(() => { el.hidden = true; }, 1800); }
+
+/* jump straight to any step with sensible defaults (for presenting) */
+function jump(i) {
+  if (i >= 1) { S.photo = 2; }
+  if (i >= 3) { S.gen2 = 3; S.cand = S.cand || 2; }
+  if (i >= 4) { S.gen3 = 3; }
+  go(i);
+}
+
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-act]'); if (!b) return;
+  const act = b.dataset.act, v = b.dataset.v;
+  if (act === 'lang') { S.lang = v; S.pick = null; window.FIG3D?.clear(); try { sessionStorage.setItem('figuni-lang', v); } catch (er) {} render(); if (!$('#sheet').hidden) openPost($('#sheet').dataset.post); return; }
+  if (act === 'go') return go(+v);
+  if (act === 'jump') return jump(+v);
+  if (act === 'back') { if (S.step === 3) S.gen3 = 3; if (S.step === 2) S.gen2 = 3; return go(Math.max(0, S.step - 1)); }
+  if (act === 'tab') { clearTimers(); S.tab = v; if (v === 'create' && S.step === 0 && S.order) S.step = 6; render(); $('#screen').scrollTop = 0; return; }
+  if (act === 'set') { const k = b.dataset.k; S[k] = (k === 'route') ? v : +v; if (k === 'route' && v === 'col') S.size = S.size; render(); return; }
+  if (act === 'upload') {
+    S.photo = 1; render();
+    requestAnimationFrame(() => requestAnimationFrame(() => { const u = $('#upbar'); if (u) u.style.width = '100%'; }));
+    later(() => { S.photo = 2; render(); }, 1000); return;
+  }
+  if (act === 'cand') { S.cand = +v; render(); return; }
+  if (act === 'regen') { S.cand = null; S.gen2 = 0; go(2); return; }
+  if (act === 'view') { S.view = v; window.FIG3D?.setMode(v); document.querySelectorAll('[data-act="view"]').forEach((x) => x.setAttribute('aria-pressed', x.dataset.v === v)); return; }
+  if (act === 'pay') {
+    const d = new Date(); const pad = (n) => String(n).padStart(2, '0');
+    S.order = { no: `FG-${d.getFullYear()}${pad(d.getMonth() + 1)}${pad(d.getDate())}-0001`, route: S.route, size: S.size, store: S.store, slot: S.slot, cand: S.cand || 2, name: $('#pet-name')?.value };
+    go(6); return;
+  }
+  if (act === 'share' || act === 'compose') {
+    const t = T();
+    if (!S.order) { toast(t.noOrder); return; }
+    if (!S.myPosts.length) S.myPosts.push({ id: 'me', cat: 1, imgs: ['post_mine.jpg'], av: '#F2643F', likes: 0, mine: 1,
+      u: { cn: STR.cn.myName, kr: STR.kr.myName }, store: S.order?.route === 'diy' ? { cn: STR.cn.stores[S.order.store][0], kr: STR.kr.stores[S.order.store][0] } : null,
+      t: { cn: STR.cn.pubTitle, kr: STR.kr.pubTitle }, b: { cn: STR.cn.pubBody, kr: STR.kr.pubBody },
+      tags: { cn: ['#柴犬', '#FIGUNI'], kr: ['#시바견', '#FIGUNI'] }, c: [] });
+    S.tab = 'community'; S.filter = 0; render(); $('#screen').scrollTop = 0; toast(t.posted); return;
+  }
+  if (act === 'filter') { S.filter = +v; render(); return; }
+  if (act === 'paint') {
+    const c = +v;
+    if (S.pick && S.pick.cls === c && S.pick.part == null) { window.FIG3D?.clear(); showPick(null); }
+    else { window.FIG3D?.highlightClass(c); showPick({ cls: c, part: null }); }
+    return;
+  }
+  if (act === 'open') return openPost(v);
+  if (act === 'close') { $('#sheet').hidden = true; return; }
+  if (act === 'like') { S.liked[v] = !S.liked[v]; openPost(v); render(); return; }
+});
+document.addEventListener('submit', (e) => {
+  const f = e.target.closest('.cbox'); if (!f) return;
+  e.preventDefault();
+  const val = $('#cinput').value.trim(); if (!val) return;
+  const id = f.dataset.post; (S.extra[id] = S.extra[id] || []).push({ u: { cn: STR.cn.myName, kr: STR.kr.myName }, av: '#F2643F', t: { cn: val, kr: val } });
+  openPost(id); const p = $('#sheet .panel'); if (p) p.scrollTop = p.scrollHeight;
+});
+$('#sheet').addEventListener('click', (e) => { if (e.target.id === 'sheet') $('#sheet').hidden = true; });
+document.addEventListener('keydown', (e) => { if (e.key === 'Escape') $('#sheet').hidden = true; });
+
+render();
+})();
+</script>
+</body>
+</html>
