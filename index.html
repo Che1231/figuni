@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FIGUNI｜사진 한 장으로, 내 손으로 칠하는 나만의 피규어</title>
+<meta name="description" content="FIGUNI는 반려동물·캐릭터 사진을 AI로 나만의 화이트 피규어로 만들어 DIY 공방으로 보내고, 고객이 전용 컬러 카드대로 직접 칠하는 서비스입니다.">
+<meta name="theme-color" content="#F1F2EE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FIGUNI 피규니">
+<meta property="og:description" content="一张照片，AI 设计专属白模，到 DIY 店亲手上色。사진 한 장으로 만드는, 내 손으로 칠하는 나만의 피규어.">
+<meta property="og:image" content="https://www.figuni-ai.com/assets/og.jpg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<link rel="preload" href="/demo/assets/shiba_glb.txt" as="fetch" crossorigin>
+<style>
+/* FIGUNI site. Resin-and-primer studio: unpainted resin white, primer grey niches, navy ink.
+   Coral is reserved for the one action (enter the demo); the four paints are content, never decoration. */
+:root{
+  --resin:#F1F2EE; --paper:#FFFFFF; --primer:#DDE1E3; --primer-2:#E7EAEB; --line:#CDD3D8;
+  --ink:#1F2A44; --muted:#5A6477; --coral:#F2643F; --coral-dark:#DC5230;
+  --caramel:#C9823F; --cream:#F2E4CC; --sakura:#E8969A; --cocoa:#3A2A24;
+  --f-brand:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --f-text:'Noto Sans SC','Noto Sans KR',system-ui,-apple-system,'PingFang SC','Malgun Gothic',sans-serif;
+  --wrap:1200px; --gut:clamp(16px,4vw,40px);
+  color-scheme:light;
+}
+html[lang="ko"]{--f-text:'Noto Sans KR','Noto Sans SC',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;scroll-padding-top:76px;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--resin);color:var(--ink);font:400 17px/1.75 var(--f-text);text-rendering:optimizeLegibility}
+html[lang="ko"] body{word-break:keep-all}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:6px}
+.wrap{max-width:var(--wrap);margin:0 auto;padding:0 var(--gut)}
+h1,h2,h3{margin:0;font-weight:800;letter-spacing:-.015em;text-wrap:balance}
+h2{font-size:clamp(28px,3.6vw,44px);line-height:1.22}
+h3{font-size:21px;line-height:1.4;font-weight:700;letter-spacing:0}
+p{margin:0}
+.lead{font-size:clamp(17px,1.5vw,19px);color:var(--muted);max-width:36em}
+.note{font-size:13px;color:var(--muted);line-height:1.6}
+.wordmark{font-family:var(--f-brand);font-weight:600;letter-spacing:.01em}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;
+  background:var(--coral);color:#fff;font-weight:700;font-size:17px;line-height:1;padding:17px 28px;border-radius:999px;
+  transition:background-color .15s ease}
+.btn:hover{background:var(--coral-dark)}
+.btn svg{width:18px;height:18px;flex:none}
+.btn-sm{font-size:15px;padding:11px 18px}
+.link{font-weight:700;text-decoration:underline;text-decoration-thickness:2px;text-underline-offset:5px;text-decoration-color:var(--line)}
+.link:hover{text-decoration-color:var(--ink)}
+
+/* nav */
+.nav{position:sticky;top:0;z-index:20;background:rgba(241,242,238,.86);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);border-bottom:1px solid transparent;transition:border-color .2s}
+.nav.scrolled{border-bottom-color:var(--line)}
+.nav .wrap{display:flex;align-items:center;gap:28px;height:68px}
+.nav .wordmark{font-size:26px;text-decoration:none;display:flex;align-items:baseline;gap:8px}
+.nav .wordmark small{font-family:var(--f-text);font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0}
+.nav ul{display:flex;gap:26px;list-style:none;margin:0 0 0 auto;padding:0}
+.nav ul a{text-decoration:none;font-size:15px;font-weight:500;color:var(--muted)}
+.nav ul a:hover{color:var(--ink)}
+.lang{display:inline-flex;background:var(--primer-2);border-radius:999px;padding:3px}
+.lang button{border:0;background:transparent;cursor:pointer;font-size:13px;font-weight:700;padding:6px 11px;border-radius:999px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 2px rgba(31,42,68,.12)}
+
+/* hero */
+.hero{padding:clamp(24px,4vw,48px) 0 clamp(48px,6vw,80px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.02fr) minmax(0,1fr);gap:clamp(28px,5vw,72px);align-items:center}
+.hero h1{font-size:clamp(40px,5.6vw,76px);line-height:1.12;white-space:pre-line}
+html[lang="ko"] .hero h1{font-size:clamp(34px,4.5vw,60px);line-height:1.2}
+.hero .lead{margin-top:24px}
+.hero .actions{display:flex;flex-wrap:wrap;align-items:center;gap:22px 28px;margin-top:36px}
+.tagline{margin-top:40px;font-family:var(--f-brand);font-weight:500;font-size:15px;color:var(--muted)}
+.tagline b{font-weight:600;color:var(--ink)}
+
+.studio{display:flex;flex-direction:column;gap:22px}
+.niche{position:relative;aspect-ratio:4/4.3;max-height:min(56vh,580px);border-radius:999px 999px 32px 32px;overflow:hidden;
+  background:linear-gradient(180deg,#E9ECED 0%,#DADFE2 62%,#CFD5D9 100%)}
+.niche::after{content:"";position:absolute;left:16%;right:16%;bottom:11%;height:7%;border-radius:50%;
+  background:radial-gradient(closest-side,rgba(31,42,68,.22),rgba(31,42,68,0));pointer-events:none}
+.niche .poster,.niche canvas{position:absolute;inset:0;width:100%;height:100%}
+.niche .poster{object-fit:contain;transition:opacity .4s ease}
+.niche canvas{opacity:0;transition:opacity .4s ease;z-index:1}
+.niche.ready canvas{opacity:1}
+.niche.ready .poster{opacity:0}
+.niche .status{position:absolute;left:0;right:0;bottom:20px;text-align:center;font-size:13px;color:var(--muted);z-index:2}
+.niche.ready .status{display:none}
+.niche .done{position:absolute;left:50%;top:22px;transform:translateX(-50%);z-index:2;width:max-content;max-width:calc(100% - 48px);text-align:center;
+  background:var(--paper);border-radius:999px;padding:8px 16px;font-size:14px;font-weight:700;box-shadow:0 6px 18px rgba(31,42,68,.12)}
+.niche .done[hidden]{display:none}
+
+.paints-head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.paints-head b{font-size:16px}
+.reset{border:0;background:none;cursor:pointer;font-size:14px;color:var(--muted);text-decoration:underline;text-underline-offset:4px;padding:4px 0}
+.reset:hover{color:var(--ink)}
+.paints{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0;padding:0;list-style:none}
+.paints li{display:flex}
+.paint{width:100%;height:100%;border:0;background:var(--paper);border-radius:18px;padding:14px 10px 12px;cursor:pointer;text-align:center;
+  display:flex;flex-direction:column;align-items:center;gap:4px;transition:box-shadow .15s ease}
+.paint .pot{width:46px;height:46px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-brand);font-weight:600;font-size:19px;
+  box-shadow:inset 0 -4px 0 rgba(0,0,0,.12);margin-bottom:6px;transition:transform .2s ease}
+.paint .nm{font-weight:700;font-size:15px;line-height:1.3}
+.paint .ar{font-size:12px;color:var(--muted);line-height:1.45}
+.paint:hover{box-shadow:0 0 0 1px var(--line)}
+.paint[aria-pressed="true"]{box-shadow:0 0 0 2px var(--ink)}
+.paint[aria-pressed="true"] .pot{transform:scale(1.08)}
+.caption{font-size:13px;color:var(--muted);line-height:1.6}
+
+/* sections */
+section.block{padding:clamp(72px,9vw,128px) 0}
+.head{display:grid;gap:18px;margin-bottom:clamp(36px,5vw,56px)}
+
+/* process */
+.steps{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(16px,2.4vw,28px);list-style:none;margin:0;padding:0;counter-reset:s}
+.step figure{margin:0 0 20px;border-radius:22px;overflow:hidden;background:var(--primer-2);aspect-ratio:4/3.4}
+.step figure img{width:100%;height:100%;object-fit:cover}
+.step .num{font-family:var(--f-brand);font-weight:600;font-size:15px;width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;background:var(--ink);color:var(--resin);margin-bottom:12px}
+.step p{color:var(--muted);font-size:16px;margin-top:6px}
+.step .time{display:inline-block;margin-top:14px;font-size:13px;font-weight:700;padding:4px 10px;border-radius:999px;background:var(--paper)}
+.steps-note{margin-top:28px}
+
+/* compare */
+.compare-scroll{overflow-x:auto;-webkit-overflow-scrolling:touch;margin:0 calc(var(--gut) * -1);padding:0 var(--gut)}
+table.compare{width:100%;min-width:760px;border-collapse:separate;border-spacing:0;font-size:16px}
+.compare th,.compare td{padding:16px 18px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+.compare thead th{border-bottom:2px solid var(--ink);font-size:16px;vertical-align:bottom}
+.compare thead th span{display:block;font-size:12px;font-weight:400;color:var(--muted);margin-top:2px}
+.compare tbody th{font-weight:500;color:var(--muted);width:17%;white-space:nowrap}
+.compare .us{background:var(--paper)}
+.compare thead .us{border-radius:20px 20px 0 0}
+.compare tbody tr:last-child .us{border-radius:0 0 20px 20px}
+.compare tbody tr:last-child td,.compare tbody tr:last-child th{border-bottom:0}
+.compare thead .us .wordmark{font-size:20px}
+.yes,.no{display:inline-flex;align-items:center;gap:8px}
+.yes::before,.no::before{content:"";width:11px;height:11px;border-radius:50%;flex:none}
+.yes::before{background:var(--ink)}
+.no::before{box-shadow:inset 0 0 0 1.5px var(--muted)}
+.no{color:var(--muted)}
+.compare .us strong{font-weight:700}
+.compare-note{margin-top:20px}
+
+/* demand */
+.demand .wrap{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(32px,6vw,88px);align-items:end}
+.bar{display:flex;height:64px;border-radius:16px;overflow:hidden;gap:3px}
+.bar span{display:block;height:100%}
+.legend{list-style:none;margin:22px 0 0;padding:0;display:grid;gap:12px}
+.legend li{display:grid;grid-template-columns:14px 44px 1fr;align-items:baseline;gap:12px;font-size:16px}
+.legend i{width:14px;height:14px;border-radius:4px;align-self:center}
+.legend b{font-family:var(--f-brand);font-weight:600;font-size:22px;line-height:1}
+
+/* partners */
+.partners{background:var(--ink);color:var(--resin)}
+.partners .lead{color:#B9C1CE}
+.cols{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(28px,5vw,72px)}
+.col h3{display:flex;align-items:baseline;gap:12px;padding-bottom:16px;border-bottom:1px solid rgba(241,242,238,.22)}
+.col h3 span{font-size:14px;font-weight:400;color:#B9C1CE}
+.col ul{list-style:none;margin:18px 0 0;padding:0;display:grid;gap:14px}
+.col li{display:grid;grid-template-columns:12px 1fr;gap:14px;color:#E3E7EC}
+.col li::before{content:"";width:10px;height:10px;border-radius:50%;margin-top:.62em;background:var(--dot)}
+
+/* team */
+.people{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(20px,3vw,32px)}
+.person{background:var(--paper);border-radius:28px;padding:clamp(24px,3vw,36px);display:grid;grid-template-columns:72px 1fr;gap:22px;align-items:start}
+.mono{width:72px;height:72px;border-radius:50%;display:grid;place-items:center;font-size:28px;font-weight:800;color:var(--cocoa)}
+.person .who{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px}
+.person .who h3{font-size:22px}
+.person .who span{font-family:var(--f-brand);font-weight:500;font-size:14px;color:var(--muted);letter-spacing:.04em}
+.person .role{font-weight:700;margin-top:4px}
+.person ul{margin:12px 0 0;padding-left:1.1em;color:var(--muted);font-size:15px;display:grid;gap:4px}
+.school{margin-top:24px}
+
+/* final */
+.final{padding-bottom:clamp(64px,8vw,112px)}
+.final .panel{background:var(--primer-2);border-radius:40px;padding:clamp(32px,5vw,72px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,64px);align-items:center;overflow:hidden}
+.final .panel .lead{margin-top:18px}
+.final .panel .btn{margin-top:32px}
+.phone{justify-self:center;width:min(300px,100%);border:10px solid var(--ink);border-radius:46px;overflow:hidden;background:var(--ink);box-shadow:0 30px 60px rgba(31,42,68,.18)}
+.phone img{width:100%;border-radius:36px}
+
+footer{padding:36px 0 48px;border-top:1px solid var(--line);font-size:14px;color:var(--muted)}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px}
+footer .wordmark{color:var(--ink);font-size:18px}
+
+@media (max-width:960px){
+  .nav ul{display:none}
+  .nav .wrap{gap:14px}
+  .nav .lang{margin-left:auto}
+  .hero .wrap{grid-template-columns:1fr}
+  .studio{max-width:560px;width:100%;margin:0 auto}
+  .steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px}
+  .demand .wrap,.cols,.people,.final .panel{grid-template-columns:1fr}
+  .final .panel{text-align:left}
+}
+@media (max-width:560px){
+  body{font-size:16px}
+  .nav .wordmark small{display:none}
+  .nav .btn-sm{padding:10px 14px;font-size:14px}
+  .lang button{padding:6px 9px}
+  .paints{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .paint{flex-direction:row;text-align:left;gap:12px;padding:12px}
+  .paint .pot{margin:0;width:40px;height:40px;font-size:17px;flex:none}
+  .paint .txt{min-width:0}
+  .steps{grid-template-columns:1fr}
+  .person{grid-template-columns:1fr}
+  .final .panel{border-radius:28px}
+}
+@media (min-width:961px) and (max-height:820px){.hero{padding-top:12px}.niche{max-height:50vh}.paint{padding:10px 8px}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="FIGUNI">FIGUNI<small>피규니</small></a>
+    <ul>
+      <li><a href="#how" data-t="navHow"></a></li>
+      <li><a href="#compare" data-t="navCompare"></a></li>
+      <li><a href="#partners" data-t="navPartners"></a></li>
+      <li><a href="#team" data-t="navTeam"></a></li>
+    </ul>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="kr" aria-pressed="true">한국어</button>
+      <button type="button" data-lang="cn" aria-pressed="false">中文</button>
+    </div>
+    <a class="btn btn-sm" href="/demo/" data-demo data-t="cta"></a>
+  </div>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="h1">
+    <div class="wrap">
+      <div>
+        <h1 id="h1" data-t="h1"></h1>
+        <p class="lead" data-t="heroSub"></p>
+        <div class="actions">
+          <a class="btn" href="/demo/" data-demo><span data-t="cta"></span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-5L15 10l-4.5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+          <a class="link" href="#how" data-t="seeHow"></a>
+        </div>
+        <p class="tagline"><b>FIGUNI</b> = Figurine + Unique</p>
+      </div>
+
+      <div class="studio">
+        <div class="niche" id="niche">
+          <img class="poster" id="poster" src="/assets/hero-white.png" alt="" width="784" height="843">
+          <p class="status" data-t="loading"></p>
+          <p class="done" id="done" hidden data-t="done" role="status"></p>
+        </div>
+        <div class="paints-head">
+          <b data-t="prompt"></b>
+          <button type="button" class="reset" id="reset" data-t="reset"></button>
+        </div>
+        <ul class="paints" id="paints"></ul>
+        <p class="caption" id="caption"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block" id="how" aria-labelledby="how-h" style="padding-top:clamp(40px,5vw,72px)">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="how-h" data-t="howH"></h2>
+        <p class="lead" data-t="howSub"></p>
+      </div>
+      <ol class="steps" id="steps"></ol>
+      <p class="note steps-note" data-t="howNote"></p>
+    </div>
+  </section>
+
+  <section class="block" id="compare" aria-labelledby="cmp-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="cmp-h" data-t="cmpH"></h2>
+        <p class="lead" data-t="cmpSub"></p>
+      </div>
+      <div class="compare-scroll" tabindex="0" role="region" aria-labelledby="cmp-h">
+        <table class="compare" id="cmp"></table>
+      </div>
+      <p class="note compare-note" data-t="cmpNote"></p>
+    </div>
+  </section>
+
+  <section class="block demand" aria-labelledby="dem-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="head" style="margin:0">
+        <h2 id="dem-h" data-t="demH"></h2>
+        <p class="lead" data-t="demSub"></p>
+      </div>
+      <div>
+        <div class="bar" id="bar" role="img"></div>
+        <ul class="legend" id="legend"></ul>
+        <p class="note" style="margin-top:18px" data-t="demNote"></p>
+      </div>
+    </div>
+  </section>
+
+  <section class="block partners" id="partners" aria-labelledby="par-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="par-h" data-t="parH"></h2>
+        <p class="lead" data-t="parSub"></p>
+      </div>
+      <div class="cols" id="cols"></div>
+    </div>
+  </section>
+
+  <section class="block" id="team" aria-labelledby="team-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="team-h" data-t="teamH"></h2>
+        <p class="lead" data-t="teamSub"></p>
+      </div>
+      <div class="people" id="people"></div>
+    </div>
+  </section>
+
+  <section class="final" aria-labelledby="fin-h">
+    <div class="wrap">
+      <div class="panel">
+        <div>
+          <h2 id="fin-h" data-t="finH"></h2>
+          <p class="lead" data-t="finSub"></p>
+          <a class="btn" href="/demo/" data-demo><span data-t="cta"></span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-5L15 10l-4.5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+        </div>
+        <div class="phone"><img id="phone-img" src="/assets/demo-kr.jpg" alt="" width="390" height="844" loading="lazy"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span><span class="wordmark">FIGUNI</span>&nbsp; Figurine + Unique</span>
+    <span data-t="foot"></span>
+    <span>© 2026 FIGUNI</span>
+  </div>
+</footer>
+
+<script type="importmap">
+{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+ "three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}
+</script>
+
+<script>
+(() => {
+const T = {
+  cn: {
+    title: 'FIGUNI｜一张照片，亲手上色的专属手办',
+    navHow: '流程', navCompare: '对比', navPartners: '合作', navTeam: '团队',
+    cta: '进入 DEMO', seeHow: '看看怎么做',
+    h1: '照片里的它，\n由你亲手上色',
+    heroSub: '上传一张宠物或角色的照片，AI 为它设计专属白模，寄到你附近的 DIY 店。照着专属配色卡按编号上色，完成只属于你的那一只。',
+    loading: '3D 模型加载中…', prompt: '点一种颜色，给豆豆上色', reset: '恢复白模',
+    done: '四种颜色涂完，就是这个样子',
+    caption: '豆豆是团队成员家的柴犬，这是用它的照片实测生成的 3D 模型。', drag: '可以拖动旋转。',
+    paints: [['焦糖', '身体、头顶、尾巴'], ['奶油', '胸口、口鼻、腿'], ['樱粉', '舌头'], ['可可', '眼鼻嘴、肉垫']],
+    howH: '从照片到手办，四步', howSub: 'AI 负责设计，工厂负责打印，最好玩的上色留给你。',
+    steps: [
+      ['上传照片', '正脸或侧身都可以，毛色和花纹看得清就好。', '一张照片就够', 'photo.jpg', '团队成员家柴犬豆豆的原照片'],
+      ['AI 设计', '生成几张 Q 版效果图，挑一张最像它的。', '约 10 分钟', 'cand1.jpg', 'AI 生成的豆豆 Q 版效果'],
+      ['3D 白模', 'AI 把效果图变成 3D 模型，自动检查能不能打印，再交给合作工厂。', '约 5 分钟出模型', 'white.jpg', '豆豆的 3D 白模渲染'],
+      ['亲手上色', '白模连同专属配色卡寄到附近的 DIY 店，你按编号涂完。', '约 7–10 天到店', 'post_after.jpg', '上色完成的豆豆手办效果'],
+    ],
+    howNote: '时间来自团队 2026 年 10 月用豆豆的照片实测；到店时间是目标值，含打印和寄送。',
+    cmpH: '专属，又能亲手完成',
+    cmpSub: '现有的选择里，要么是你家那只却只能买成品，要么能自己动手但人人做同一款。FIGUNI 把两件事放在一起。',
+    cols: [['FIGUNI', ''], ['AI 彩模', '京东、LabPop 等'], ['手工定制', '羊毛毡、idus 等'], ['通用 DIY', '拼豆、绘画咖啡馆']],
+    rows: [
+      ['作品是你家那只', ['y', '是'], ['y', '是'], ['y', '是'], ['n', '否，大家做同一款']],
+      ['亲手完成', ['y', '是'], ['n', '否'], ['n', '否'], ['y', '是']],
+      ['价格', '149–189 元，含门店体验', '99–400 元', '200–2,000 元', '人均 10–220 元/次'],
+      ['交付周期', '约 7–10 天（目标）', '最快约 7 天', '3 天至 2 个月', '当场完成'],
+      ['线下体验', '合作 DIY 店', '无', '无', '有'],
+    ],
+    cmpNote: '价格和周期来自公开报价与门店调研，详见商业计划书 2-3。',
+    demH: '46 条真实评论里，29 条在问多少钱',
+    demSub: '我们在 Bilibili、抖音、小红书和 Reddit 的宠物与真人手办内容下，逐条核对了真实评论。大家看到效果就想要，却找不到能放心下单的地方。',
+    legend: [[4, '说愿意付钱'], [2, '表示要下单'], [29, '在问价格'], [11, '在问怎么定制、在哪买']],
+    demNote: '团队逐条核对公开评论的结果（2026 年 10 月）。',
+    parH: '门店和工厂，都不用多投入',
+    parSub: 'FIGUNI 不开工厂、不开门店，把订单交给已经在做这件事的人。',
+    partners: [
+      ['DIY 店', '拼豆店、手作店', ['白模、配色卡和物料由 FIGUNI 提供，门店零投入', '门店出座位和入门讲解，体验费全归门店', '每一单另有分成', '顾客为自家宠物而来，工作日也有理由进店']],
+      ['3D 打印工厂', '树脂与多色打印', ['收到的是已通过可打印检查的标准文件', '订单版权清晰、按单生产，不用自己获客', '树脂和多色订单，单价更高']],
+    ],
+    teamH: '两个人，从顾客一直到工厂',
+    teamSub: '汉阳大学一般研究生院全球技术经营专业的两名中国留学生，一人对接顾客、内容和门店，一人对接数据、工厂和供应商。',
+    people: [
+      ['陈', '陈思羽', 'CHEN SIYU', '项目负责人，产品与增长', ['创立光燧互动网络科技，任创始人兼董事长', '搭建“AI 内容 + TikTok 引流”的获客模式', '曾任网易游戏、冰川网络广告设计']],
+      ['胡', '胡蝶', 'HU DIE', '市场与供应链负责人', ['中韩市场调研与用户访谈', '单位经济、转化与复购数据分析', '打样品控、代工厂与供应商开发']],
+    ],
+    finH: '在手机上走一遍完整流程',
+    finSub: '上传照片、挑效果图、转动 3D 模型、看配色卡、选方案下单，都可以在 DEMO 里体验。AI 步骤用豆豆的实测结果代替。',
+    foot: 'AI 定制白模 × DIY 亲手上色',
+  },
+  kr: {
+    title: 'FIGUNI｜사진 한 장으로, 내 손으로 칠하는 나만의 피규어',
+    navHow: '이용 방법', navCompare: '비교', navPartners: '제휴', navTeam: '팀',
+    cta: '데모 체험하기', seeHow: '어떻게 만드나요',
+    h1: '우리 아이 사진이,\n내가 칠한 피규어로',
+    heroSub: '반려동물이나 캐릭터 사진을 올리면 AI가 나만의 화이트 모델을 디자인해 가까운 DIY 공방으로 보냅니다. 전용 컬러 카드의 번호대로 칠하면, 세상에 하나뿐인 피규어가 완성됩니다.',
+    loading: '3D 모델 불러오는 중…', prompt: '색을 눌러 두두를 칠해 보세요', reset: '화이트 모델로 되돌리기',
+    done: '네 가지 색을 다 칠하면 이런 모습이에요',
+    caption: '두두는 팀원이 키우는 시바견입니다. 두두의 사진으로 직접 만든 3D 모델이에요.', drag: '드래그해서 돌려 볼 수 있습니다.',
+    paints: [['캐러멜', '몸통, 머리 위, 꼬리'], ['크림', '가슴, 주둥이, 다리'], ['체리 핑크', '혀'], ['코코아', '눈, 코, 입, 발바닥']],
+    howH: '사진에서 피규어까지, 네 단계', howSub: '디자인은 AI가, 출력은 공장이, 가장 재미있는 채색은 고객이 합니다.',
+    steps: [
+      ['사진 올리기', '정면이든 옆모습이든 괜찮아요. 털 색과 무늬만 잘 보이면 됩니다.', '사진 한 장이면 충분', 'photo.jpg', '팀원의 시바견 두두 원본 사진'],
+      ['AI 디자인', '귀여운 SD 시안 몇 장 중에서 가장 닮은 한 장을 고릅니다.', '약 10분', 'cand1.jpg', 'AI가 만든 두두의 SD 시안'],
+      ['3D 화이트 모델', 'AI가 시안을 3D 모델로 만들고, 출력 가능한지 자동으로 확인한 뒤 제휴 공장으로 보냅니다.', '약 5분이면 모델 완성', 'white.jpg', '두두의 3D 화이트 모델 렌더'],
+      ['직접 채색', '화이트 모델과 전용 컬러 카드가 가까운 DIY 공방에 도착하면, 번호대로 칠합니다.', '약 7–10일 후 공방 도착', 'post_after.jpg', '채색을 마친 두두 피규어'],
+    ],
+    howNote: '시간은 2026년 10월 두두의 사진으로 팀이 직접 측정한 값입니다. 공방 도착 기간은 출력과 배송을 포함한 목표치입니다.',
+    cmpH: '나만의 작품을, 내 손으로',
+    cmpSub: '지금까지는 우리 아이를 닮은 완제품을 사거나, 직접 만들되 모두 같은 도안을 쓰는 것 중 하나였습니다. FIGUNI는 이 둘을 합쳤습니다.',
+    cols: [['FIGUNI', ''], ['AI 컬러 피규어', '징둥, LabPop, 뭉클'], ['수공예 맞춤', '양모펠트, idus'], ['범용 DIY', '펄러비즈, 드로잉카페']],
+    rows: [
+      ['나만의 작품', ['y', '예'], ['y', '예'], ['y', '예'], ['n', '아니요, 모두 같은 도안']],
+      ['직접 완성', ['y', '예'], ['n', '아니요'], ['n', '아니요'], ['y', '예']],
+      ['가격', '49,000–59,000원, 공방 체험 포함', '69,000원부터', '27만–43만 원', '회당 2만–6.5만 원'],
+      ['제작 기간', '약 7–10일(목표)', '최단 약 7일', '3일–2개월', '현장 완성'],
+      ['오프라인 체험', '제휴 DIY 공방', '없음', '없음', '있음'],
+    ],
+    cmpNote: '가격과 기간은 공개 판매가와 매장 조사 기준입니다(사업계획서 2-3).',
+    demH: '실제 댓글 46건 중 29건이 가격을 물었습니다',
+    demSub: 'Bilibili, 더우인, 샤오훙수, Reddit의 반려동물·인물 피규어 게시물에서 댓글을 하나씩 원문으로 확인했습니다. 결과물을 보면 갖고 싶어 하지만, 믿고 주문할 곳이 없습니다.',
+    legend: [[4, '돈을 내겠다'], [2, '주문하겠다'], [29, '가격 문의'], [11, '제작 방법·구매처 문의']],
+    demNote: '팀이 공개 댓글을 하나씩 확인한 결과입니다(2026년 10월).',
+    parH: '공방도 공장도, 추가 투자 없이',
+    parSub: 'FIGUNI는 공장도 매장도 짓지 않고, 이미 그 일을 하고 있는 곳에 주문을 연결합니다.',
+    partners: [
+      ['DIY 공방', '펄러비즈·공예 공방', ['화이트 모델, 컬러 카드, 재료는 FIGUNI가 제공해 초기 비용 0원', '공방은 좌석과 기초 강습만, 체험비는 전액 공방 수익', '주문마다 수수료를 추가로 받습니다', '자기 반려동물을 만들러 오는 고객이라 평일에도 방문 이유가 생깁니다']],
+      ['3D 프린팅 공장', '레진·멀티컬러 출력', ['출력 가능 여부를 검사한 표준 파일로 받습니다', '저작권이 명확한 주문을 건별로 생산해 따로 영업할 필요가 없습니다', '레진·멀티컬러 주문으로 단가가 높습니다']],
+    ],
+    teamH: '고객부터 공장까지, 두 사람',
+    teamSub: '한양대학교 일반대학원 글로벌기술경영 전공의 중국 유학생 두 명입니다. 한 명은 고객·콘텐츠·매장을, 한 명은 데이터·공장·공급업체를 맡습니다.',
+    people: [
+      ['진', '진시우', 'CHEN SIYU', '프로젝트 총괄, 제품·성장', ['광쑤이 인터랙티브 창업, 대표이사', '‘AI 콘텐츠 + 틱톡 유입’ 고객 확보 모델 구축', '전 넷이즈게임즈·빙촨네트워크 광고 디자이너']],
+      ['호', '호접', 'HU DIE', '시장·공급망 총괄', ['한·중 시장 조사, 고객 인터뷰', '단위 경제성·전환·재구매 데이터 분석', '시제품·품질 관리, 위탁 공장·공급업체 개발']],
+    ],
+    finH: '휴대폰에서 전체 과정을 직접 해 보세요',
+    finSub: '사진 업로드, 시안 선택, 3D 모델 돌려 보기, 컬러 카드 확인, 옵션 선택과 주문까지 데모에서 체험할 수 있습니다. AI 단계는 두두의 실측 결과로 대신합니다.',
+    foot: 'AI 맞춤 화이트 모델 × DIY 직접 채색',
+  },
+};
+const PAINT_HEX = ['#C9823F', '#F2E4CC', '#E8969A', '#3A2A24'];
+const BAR = ['#3A2A24', '#C9823F', '#E8969A', '#9AA4B0'];
+const DOTS = ['#C9823F', '#E8969A'];
+const MONO = ['#E8C9A4', '#F1C3C4'];
+const $ = (s) => document.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const fine = window.matchMedia('(pointer: fine)').matches;
+
+let lang = 'kr'; // Korean first; Chinese only when chosen in this tab
+try { if (sessionStorage.getItem('figuni-lang') === 'cn') lang = 'cn'; } catch (e) {}
+const painted = new Set();
+
+function cell(v) {
+  if (Array.isArray(v)) return `<span class="${v[0] === 'y' ? 'yes' : 'no'}">${esc(v[1])}</span>`;
+  return esc(v);
+}
+function render() {
+  const t = T[lang];
+  document.documentElement.lang = lang === 'kr' ? 'ko' : 'zh-CN';
+  document.title = t.title;
+  document.querySelectorAll('[data-t]').forEach((el) => { el.textContent = t[el.dataset.t]; });
+  document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  $('#caption').textContent = t.caption + (fine ? ' ' + t.drag : '');
+  $('#paints').innerHTML = t.paints.map(([n, a], i) => `<li><button type="button" class="paint" data-paint="${i}" aria-pressed="${painted.has(i)}">
+    <span class="pot" style="background:${PAINT_HEX[i]};color:${i === 3 ? '#F1F2EE' : '#3A2A24'}" aria-hidden="true">${i + 1}</span>
+    <span class="txt"><span class="nm">${esc(n)}</span><br><span class="ar">${esc(a)}</span></span></button></li>`).join('');
+  $('#steps').innerHTML = t.steps.map(([h, p, tm, img, alt], i) => `<li class="step">
+    <figure><img src="/demo/assets/${img}" alt="${esc(alt)}" loading="lazy" width="900" height="675"></figure>
+    <span class="num" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p><span class="time">${esc(tm)}</span></li>`).join('');
+  $('#cmp').innerHTML = `<thead><tr><th scope="col"><span class="sr"></span></th>${t.cols.map(([c, s], i) => `<th scope="col" class="${i === 0 ? 'us' : ''}">${i === 0 ? `<span class="wordmark" style="color:var(--ink);font-size:20px;margin:0">${esc(c)}</span>` : esc(c)}${s ? `<span>${esc(s)}</span>` : ''}</th>`).join('')}</tr></thead>
+    <tbody>${t.rows.map(([label, ...vals]) => `<tr><th scope="row">${esc(label)}</th>${vals.map((v, i) => `<td class="${i === 0 ? 'us' : ''}">${i === 0 ? `<strong>${cell(v)}</strong>` : cell(v)}</td>`).join('')}</tr>`).join('')}</tbody>`;
+  const total = t.legend.reduce((a, [n]) => a + n, 0);
+  $('#bar').innerHTML = t.legend.map(([n], i) => `<span style="flex:${n} 1 0;background:${BAR[i]}"></span>`).join('');
+  $('#bar').setAttribute('aria-label', t.legend.map(([n, s]) => `${n} ${s}`).join(', ') + ` / ${total}`);
+  $('#legend').innerHTML = t.legend.map(([n, s], i) => `<li><i style="background:${BAR[i]}"></i><b>${n}</b><span>${esc(s)}</span></li>`).join('');
+  $('#cols').innerHTML = t.partners.map(([h, sub, items], i) => `<div class="col" style="--dot:${DOTS[i]}"><h3>${esc(h)}<span>${esc(sub)}</span></h3><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div>`).join('');
+  $('#people').innerHTML = t.people.map(([m, n, en, role, items], i) => `<article class="person"><div class="mono" style="background:${MONO[i]}" aria-hidden="true">${esc(m)}</div>
+    <div><div class="who"><h3>${esc(n)}</h3><span>${esc(en)}</span></div><p class="role">${esc(role)}</p><ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul></div></article>`).join('');
+  $('#phone-img').src = `/assets/demo-${lang}.jpg`;
+  $('#phone-img').alt = lang === 'kr' ? 'FIGUNI 데모의 3D 모델 화면' : 'FIGUNI DEMO 的 3D 模型页面';
+  syncDone();
+}
+function syncDone() { $('#done').hidden = painted.size !== 4; }
+
+document.addEventListener('click', (e) => {
+  const lb = e.target.closest('[data-lang]');
+  if (lb) { lang = lb.dataset.lang; try { sessionStorage.setItem('figuni-lang', lang); } catch (er) {} render(); return; }
+  const pb = e.target.closest('[data-paint]');
+  if (pb) {
+    const i = +pb.dataset.paint; const on = !painted.has(i);
+    on ? painted.add(i) : painted.delete(i);
+    pb.setAttribute('aria-pressed', String(on));
+    window.HERO3D?.paint(i, on); syncDone(); return;
+  }
+  if (e.target.closest('#reset')) {
+    painted.clear(); document.querySelectorAll('[data-paint]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    window.HERO3D?.reset(); syncDone(); return;
+  }
+  if (e.target.closest('[data-demo]')) { try { sessionStorage.setItem('figuni-lang', lang); } catch (er) {} }
+});
+window.addEventListener('hero3d-ready', () => painted.forEach((i) => window.HERO3D.paint(i, true)));
+const nav = $('#nav');
+const onScroll = () => nav.classList.toggle('scrolled', window.scrollY > 8);
+window.addEventListener('scroll', onScroll, { passive: true }); onScroll();
+render();
+})();
+</script>
+
+<script type="module">
+import * as THREE from 'three';
+import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+
+const niche = document.getElementById('niche');
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+const coarse = window.matchMedia('(pointer: coarse)').matches;
+const PAINT = [0xC9823F, 0xF2E4CC, 0xE8969A, 0x3A2A24];
+const CLS = [0, 1, 2, 3, 3, 3, 3, 1, 1, 1, 1, 1, 3, 3, 3, 3]; // component id -> paint number (same map as the demo)
+
+function hasGL() { try { const c = document.createElement('canvas'); return !!(c.getContext('webgl2') || c.getContext('webgl')); } catch (e) { return false; } }
+
+if (hasGL()) {
+  const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+  renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
+  renderer.outputColorSpace = THREE.SRGBColorSpace;
+  renderer.toneMapping = THREE.ACESFilmicToneMapping; renderer.toneMappingExposure = 1.02;
+  niche.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  const camera = new THREE.PerspectiveCamera(28, 1, 0.01, 50);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0x8f97a3, 1.2));
+  const key = new THREE.DirectionalLight(0xfff3e6, 2.1); key.position.set(-2.2, 3.2, 2.6); scene.add(key);
+  const rim = new THREE.DirectionalLight(0xe6eeff, 1.0); rim.position.set(2.6, 1.6, -2.4); scene.add(rim);
+  const controls = new OrbitControls(camera, renderer.domElement);
+  controls.enableDamping = true; controls.enablePan = false; controls.enableZoom = false;
+  controls.minPolarAngle = 0.95; controls.maxPolarAngle = 1.72;
+  controls.autoRotate = !reduce; controls.autoRotateSpeed = 1.1;
+  if (coarse) { controls.enableRotate = false; renderer.domElement.style.touchAction = 'pan-y'; }
+  const target = new THREE.Vector3(0, 0.02, 0);
+  const dir = new THREE.Vector3(-1.0, 0.42, 2.35).normalize();
+
+  const white = new THREE.MeshStandardMaterial({ color: 0xE8E9E5, roughness: 0.6, metalness: 0 });
+  let mesh = null, original = null, partOf = null;
+  const layers = new Map();
+  let tweens = [];
+
+  function size() {
+    const w = niche.clientWidth || 400, h = niche.clientHeight || 430;
+    renderer.setSize(w, h, false); camera.aspect = w / h;
+    const half = THREE.MathUtils.degToRad(camera.fov / 2);
+    const d = Math.max(2.55, 0.78 / (Math.tan(half) * camera.aspect));
+    camera.position.copy(target).addScaledVector(dir, d); camera.updateProjectionMatrix(); controls.target.copy(target); controls.update();
+  }
+  new ResizeObserver(size).observe(niche); size();
+
+  function layer(i) {
+    if (layers.has(i)) return layers.get(i);
+    const g = mesh.geometry, idx = g.index, pos = g.attributes.position, out = [];
+    const nf = idx ? idx.count / 3 : pos.count / 3;
+    for (let f = 0; f < nf; f++) {
+      if (CLS[partOf[f]] !== i) continue;
+      for (let k = 0; k < 3; k++) { const v = idx ? idx.getX(f * 3 + k) : f * 3 + k; out.push(pos.getX(v), pos.getY(v), pos.getZ(v)); }
+    }
+    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.Float32BufferAttribute(out, 3)); geo.computeVertexNormals();
+    const mat = new THREE.MeshStandardMaterial({ color: PAINT[i], roughness: i === 3 ? 0.35 : 0.55, transparent: true, opacity: 0, polygonOffset: true, polygonOffsetFactor: -2, polygonOffsetUnits: -2 });
+    const m = new THREE.Mesh(geo, mat); m.visible = false; mesh.add(m);
+    const L = { m, mat }; layers.set(i, L); return L;
+  }
+  function fade(L, to) {
+    if (to > 0) L.m.visible = true;
+    if (reduce) { L.mat.opacity = to; L.m.visible = to > 0; settle(); return; }
+    tweens = tweens.filter((tw) => tw.L !== L);
+    tweens.push({ L, from: L.mat.opacity, to, t0: performance.now() });
+  }
+  function settle() {
+    const all = [0, 1, 2, 3].every((i) => layers.get(i)?.mat.opacity > 0.99 && layers.get(i).m.visible);
+    if (!original) return;
+    mesh.material = all ? original : white;
+    layers.forEach((L) => { L.m.visible = all ? false : L.mat.opacity > 0.001; });
+  }
+  const on = new Set();
+  window.HERO3D = {
+    paint(i, v) {
+      if (!mesh || !partOf) return;
+      v ? on.add(i) : on.delete(i);
+      if (mesh.material === original && on.size < 4) { mesh.material = white; layers.forEach((L, k) => { L.m.visible = on.has(k) || k === i; }); }
+      fade(layer(i), v ? 1 : 0);
+      controls.autoRotate = !reduce;
+    },
+    reset() { on.clear(); if (!mesh) return; mesh.material = white; layers.forEach((L) => fade(L, 0)); },
+  };
+  window.__poster = () => { renderer.render(scene, camera); return renderer.domElement.toDataURL('image/png'); };
+
+  const txt = (u) => fetch(u).then((r) => { if (!r.ok) throw new Error(u); return r.text(); });
+  Promise.all([txt('/demo/assets/shiba_glb.txt'), txt('/demo/assets/parts_b64.txt')]).then(([g64, p64]) => {
+    const pb = atob(p64.trim()); partOf = new Uint8Array(pb.length); for (let i = 0; i < pb.length; i++) partOf[i] = pb.charCodeAt(i);
+    const gb = atob(g64.trim()); const buf = new Uint8Array(gb.length); for (let i = 0; i < gb.length; i++) buf[i] = gb.charCodeAt(i);
+    new GLTFLoader().parse(buf.buffer, '', (gltf) => {
+      const model = gltf.scene;
+      const box = new THREE.Box3().setFromObject(model);
+      const c = box.getCenter(new THREE.Vector3()), s = box.getSize(new THREE.Vector3());
+      const k = 1.25 / Math.max(s.x, s.y, s.z);
+      model.scale.setScalar(k); model.position.set(-c.x * k, -box.min.y * k - 0.36, -c.z * k);
+      model.traverse((o) => { if (o.isMesh && !mesh) mesh = o; });
+      original = mesh.material; mesh.material = white;
+      scene.add(model);
+      niche.classList.add('ready');
+      window.dispatchEvent(new Event('hero3d-ready'));
+    }, () => {});
+  }).catch(() => {});
+
+  let visible = true;
+  new IntersectionObserver(([e]) => { visible = e.isIntersecting; }).observe(niche);
+  renderer.setAnimationLoop((now) => {
+    if (!visible) return;
+    if (tweens.length) {
+      tweens = tweens.filter((tw) => {
+        const p = Math.min(1, (now - tw.t0) / 480), e = 1 - Math.pow(1 - p, 3);
+        tw.L.mat.opacity = tw.from + (tw.to - tw.from) * e;
+        if (p >= 1) { if (tw.to === 0) tw.L.m.visible = false; return false; }
+        return true;
+      });
+      if (!tweens.length) settle();
+    }
+    controls.update(); renderer.render(scene, camera);
+  });
+}
+</script>
+</body>
+</html>
