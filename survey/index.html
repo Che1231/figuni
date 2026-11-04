@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>FIGUNI 소비자 수요 조사</title>
+<meta name="description" content="FIGUNI 소비자 수요 조사: 반려동물·캐릭터 맞춤 피규어와 DIY 채색 체험에 대한 의견을 들려주세요. 익명, 약 3~5분.">
+<meta name="theme-color" content="#F1F2EE">
+<meta property="og:type" content="website">
+<meta property="og:title" content="FIGUNI 소비자 수요 조사 | 消费者需求调查">
+<meta property="og:description" content="AI 맞춤 피규어 × DIY 직접 채색 체험 · 익명 · 약 3~5분 / AI 定制专属手办 × DIY 亲手上色体验 · 匿名 · 约 3–5 分钟">
+<meta property="og:image" content="https://www.figuni-ai.com/assets/og.jpg">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Noto+Sans+KR:wght@400;500;700;800&family=Noto+Sans+SC:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+/* Same resin-and-ink look as the landing page. Coral stays reserved for the one action: submitting. */
+:root{
+  --resin:#F1F2EE; --paper:#FFFFFF; --primer:#DDE1E3; --primer-2:#E7EAEB; --line:#CDD3D8; --wash:#F6F7F4;
+  --ink:#1F2A44; --muted:#5A6477; --coral:#F2643F; --coral-dark:#DC5230; --ok:#2E7D5B;
+  --f-brand:'Fredoka',ui-rounded,system-ui,sans-serif;
+  --f-text:'Noto Sans SC','Noto Sans KR',system-ui,-apple-system,'PingFang SC','Malgun Gothic',sans-serif;
+  --gut:clamp(16px,4vw,32px);
+  color-scheme:light;
+}
+html[lang="ko"]{--f-text:'Noto Sans KR','Noto Sans SC',system-ui,-apple-system,'Apple SD Gothic Neo','Malgun Gothic',sans-serif}
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;scroll-padding-top:96px}
+body{margin:0;background:var(--resin);color:var(--ink);font:400 16px/1.7 var(--f-text);text-rendering:optimizeLegibility}
+html[lang="ko"] body{word-break:keep-all}
+img{display:block;max-width:100%;height:auto}
+a{color:inherit}
+button,input,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--ink);outline-offset:3px;border-radius:8px}
+h1,h2,h3{margin:0;letter-spacing:-.015em;text-wrap:balance}
+p{margin:0}
+.wrap{max-width:780px;margin:0 auto;padding:0 var(--gut)}
+
+/* header + progress */
+.top{position:sticky;top:0;z-index:10;background:rgba(241,242,238,.9);backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px)}
+.top .wrap{display:flex;align-items:center;gap:16px;height:64px;max-width:1100px}
+.wordmark{font-family:var(--f-brand);font-weight:600;font-size:24px;letter-spacing:.01em;text-decoration:none;display:flex;align-items:baseline;gap:8px}
+.wordmark small{font-family:var(--f-text);font-size:13px;font-weight:700;color:var(--muted);letter-spacing:0}
+.lang{display:inline-flex;background:var(--primer-2);border-radius:999px;padding:3px;margin-left:auto}
+.lang button{border:0;background:transparent;cursor:pointer;font-size:13px;font-weight:700;padding:6px 11px;border-radius:999px;color:var(--muted)}
+.lang button[aria-pressed="true"]{background:var(--paper);color:var(--ink);box-shadow:0 1px 2px rgba(31,42,68,.12)}
+.home{font-size:14px;font-weight:700;text-decoration:none;color:var(--muted);white-space:nowrap}
+.home:hover{color:var(--ink)}
+.bar{height:4px;background:var(--primer-2)}
+.bar i{display:block;height:100%;width:0;background:var(--ink);transition:width .3s ease}
+.count{position:absolute;right:max(var(--gut),calc((100% - 1100px)/2 + var(--gut)));top:72px;font-family:var(--f-brand);font-weight:600;font-size:13px;color:var(--muted);
+  background:var(--paper);border-radius:999px;padding:3px 12px;box-shadow:0 2px 8px rgba(31,42,68,.08);transition:opacity .2s}
+
+main{padding:28px 0 96px}
+/* intro */
+.intro{background:var(--paper);border-radius:28px;padding:clamp(24px,4vw,40px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;align-items:center}
+.kicker{font-size:14px;font-weight:700;color:var(--muted)}
+.intro h1{font-size:clamp(26px,4.2vw,38px);line-height:1.25;font-weight:800;margin-top:8px}
+.intro .desc{margin-top:16px;color:var(--muted);font-size:15.5px}
+.intro img{width:clamp(96px,16vw,150px)}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;list-style:none;padding:0}
+.chips li{background:var(--wash);border:1px solid var(--primer);border-radius:999px;padding:4px 12px;font-size:13px;font-weight:700;color:var(--ink)}
+.howto{margin:18px 4px 0;font-size:14px;color:var(--muted)}
+
+/* questions */
+form{display:grid;gap:14px;margin-top:22px}
+fieldset{margin:0;min-width:0;border:0;background:var(--paper);border-radius:22px;padding:clamp(20px,3.4vw,30px)}
+legend{float:left;width:100%;padding:0;display:flex;gap:14px;align-items:flex-start}
+legend + *{clear:both}
+.qn{flex:none;width:34px;height:34px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-brand);font-weight:600;font-size:15px;
+  background:var(--primer-2);color:var(--muted);transition:background-color .2s,color .2s;margin-top:1px}
+fieldset.done .qn{background:var(--ink);color:#fff}
+.qt{font-size:17.5px;font-weight:700;line-height:1.5}
+.tag{display:inline-block;margin-left:8px;vertical-align:2px;font-size:12px;font-weight:700;color:var(--muted);background:var(--wash);border:1px solid var(--primer);border-radius:999px;padding:1px 9px;white-space:nowrap}
+.opts{display:grid;gap:8px;margin-top:16px;padding-left:48px}
+.opts.cols{grid-template-columns:repeat(auto-fill,minmax(170px,1fr))}
+.opt{position:relative;display:flex;align-items:flex-start;gap:12px;border-radius:14px;padding:12px 14px;background:var(--wash);cursor:pointer;
+  box-shadow:inset 0 0 0 1px var(--primer);transition:box-shadow .15s,background-color .15s;line-height:1.5}
+.opt:hover{box-shadow:inset 0 0 0 1px var(--muted)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .mk{flex:none;width:20px;height:20px;margin-top:1.5px;border:2px solid var(--line);background:var(--paper);display:grid;place-items:center;transition:border-color .15s,background-color .15s}
+.opt input[type=radio] + .mk{border-radius:50%}
+.opt input[type=checkbox] + .mk{border-radius:6px}
+.opt .mk::after{content:"";width:8px;height:8px;border-radius:50%;background:#fff;transform:scale(0);transition:transform .15s}
+.opt input[type=checkbox] + .mk::after{width:10px;height:6px;border-radius:0;background:none;border:solid #fff;border-width:0 0 2.5px 2.5px;transform:rotate(-45deg) scale(0);margin-top:-2px}
+.opt input:checked + .mk{border-color:var(--ink);background:var(--ink)}
+.opt input:checked + .mk::after{transform:scale(1)}
+.opt input[type=checkbox]:checked + .mk::after{transform:rotate(-45deg) scale(1)}
+.opt:has(input:checked){background:var(--paper);box-shadow:inset 0 0 0 2px var(--ink)}
+.opt:has(input:focus-visible){outline:3px solid var(--ink);outline-offset:2px}
+.opt:has(input:disabled){opacity:.45;cursor:not-allowed}
+.opt .lb{font-size:15px;font-weight:500}
+.opt .lb b{display:block;font-weight:700}
+.opt .lb small{display:block;font-size:13.5px;color:var(--muted);font-weight:400;margin-top:2px}
+.limit{margin:10px 0 0 48px;font-size:13px;color:var(--muted)}
+.limit.full{color:var(--ink);font-weight:700}
+textarea{display:block;width:calc(100% - 48px);margin:16px 0 0 48px;min-height:120px;resize:vertical;border:0;border-radius:14px;padding:14px;background:var(--wash);
+  box-shadow:inset 0 0 0 1px var(--primer);font-size:15px;line-height:1.6}
+textarea:focus{outline:none;box-shadow:inset 0 0 0 2px var(--ink);background:var(--paper)}
+
+/* submit */
+.send{background:var(--paper);border-radius:22px;padding:clamp(22px,3.4vw,30px);display:grid;gap:14px;justify-items:start}
+.btn{display:inline-flex;align-items:center;gap:10px;border:0;cursor:pointer;text-decoration:none;background:var(--coral);color:#fff;font-weight:700;font-size:17px;line-height:1;
+  padding:17px 30px;border-radius:999px;transition:background-color .15s}
+.btn:hover{background:var(--coral-dark)}
+.btn[disabled]{opacity:.6;cursor:progress}
+.btn svg{width:18px;height:18px}
+.ghost{display:inline-flex;align-items:center;font-weight:700;text-decoration:none;padding:15px 24px;border-radius:999px;box-shadow:inset 0 0 0 2px var(--ink)}
+.small{font-size:13px;color:var(--muted);line-height:1.6}
+.msg{font-size:14px;font-weight:700;color:var(--coral-dark)}
+.msg[hidden]{display:none}
+.msg a{font-weight:700}
+
+/* thanks */
+.thanks{background:var(--paper);border-radius:28px;padding:clamp(28px,5vw,48px);text-align:center;display:grid;justify-items:center;gap:14px;margin-top:22px}
+.thanks[hidden]{display:none}
+.thanks img{width:150px}
+.thanks h2{font-size:clamp(26px,4vw,34px);font-weight:800}
+.thanks p{color:var(--muted);max-width:30em}
+.thanks .row{display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:8px}
+footer{padding:26px 0 40px;font-size:13px;color:var(--muted);text-align:center}
+footer .fw{font-family:var(--f-brand);font-weight:600;font-size:15px;color:var(--ink)}
+
+@media (max-width:560px){
+  .top .wrap{gap:10px}
+  .wordmark small{display:none}
+  .home{font-size:13px}
+  .intro{grid-template-columns:1fr}
+  .intro img{display:none}
+  .opts,.limit{padding-left:0;margin-left:0}
+  .opts{margin-top:14px}
+  textarea{width:100%;margin-left:0}
+  .count{top:70px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}html{scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="wrap">
+    <a class="wordmark" href="/" aria-label="FIGUNI">FIGUNI<small>피규니</small></a>
+    <div class="lang" role="group" aria-label="Language">
+      <button type="button" data-lang="kr" aria-pressed="true">한국어</button>
+      <button type="button" data-lang="cn" aria-pressed="false">中文</button>
+    </div>
+    <a class="home" href="/" data-t="home"></a>
+  </div>
+  <div class="bar" aria-hidden="true"><i id="bar"></i></div>
+  <span class="count" id="count" aria-live="polite"></span>
+</header>
+
+<main class="wrap">
+  <section class="intro" id="intro" aria-labelledby="h1">
+    <div>
+      <p class="kicker" data-t="kicker"></p>
+      <h1 id="h1" data-t="h1"></h1>
+      <p class="desc" data-t="desc"></p>
+      <ul class="chips"><li data-t="c1"></li><li data-t="c2"></li><li data-t="c3"></li></ul>
+    </div>
+    <img src="/demo/assets/hero.png" alt="" width="640" height="637">
+  </section>
+  <p class="howto" data-t="howto"></p>
+
+  <form id="form" novalidate>
+    <noscript><p>JavaScript가 꺼져 있습니다 · 请开启 JavaScript ·
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNrsoPixY7ap7HwKo2-NWAYm4aqjTTeBy-CRXwDrzswLhLoQ/viewform">Google Forms</a></p></noscript>
+  </form>
+
+  <section class="thanks" id="thanks" hidden aria-live="polite">
+    <img src="/demo/assets/hero.png" alt="" width="640" height="637">
+    <h2 data-t="thxH" tabindex="-1" id="thx-h"></h2>
+    <p data-t="thxP"></p>
+    <div class="row">
+      <a class="btn" href="/demo/" data-t="thxDemo"></a>
+      <a class="ghost" href="/" data-t="thxHome"></a>
+    </div>
+  </section>
+</main>
+<footer><b class="fw">FIGUNI</b>&nbsp; Figurine + Unique · © 2026 FIGUNI</footer>
+
+<script>
+(() => {
+const FORM = 'https://docs.google.com/forms/d/e/1FAIpQLSeNrsoPixY7ap7HwKo2-NWAYm4aqjTTeBy-CRXwDrzswLhLoQ';
+// Questions exactly as in the Google Form. Each option value is the form's own bilingual string ("中文 / 한국어"),
+// so answers land in the same response sheet as answers given on Google Forms.
+const Q = [
+ [2059629422, 'r', '1. 您目前主要生活在哪个市场？ / 현재 주로 어느 시장에 거주하고 계십니까?', ['中国大陆 / 중국 본토', '韩国 / 한국', '其他 / 기타']],
+ [1725455918, 'r', '2. 您的年龄段是？ / 연령대는 어떻게 되십니까?', ['18岁以下 / 18세 미만', '18–24岁 / 18~24세', '25–34岁 / 25~34세', '35–44岁 / 35~44세', '45岁及以上 / 45세 이상']],
+ [189447518, 'r', '3. 您是否养宠物？ / 현재 반려동물을 키우고 계십니까?', ['目前正在养 / 현재 키우고 있음', '曾经养过 / 과거에 키운 적 있음', '没有 / 없음']],
+ [2006332037, 'r', '4. 您是否有原创角色（OC）、游戏角色或个人形象，希望制作成实体作品？ / 실물로 제작하고 싶은 오리지널 캐릭터(OC), 게임 캐릭터 또는 본인 아바타가 있으십니까?', ['有 / 있음', '没有 / 없음', '不确定 / 잘 모르겠음']],
+ [1086807375, 'r', '5. 过去12个月，您是否购买过DIY手作、定制手办、宠物周边或类似产品？ / 최근 12개월 동안 DIY 공예품, 맞춤 피규어, 반려동물 굿즈 또는 유사 제품을 구매한 적이 있으십니까?', ['购买过 / 구매한 적 있음', '体验或制作过但未购买成品 / 체험 또는 제작은 했지만 완제품은 구매하지 않음', '没有 / 없음']],
+ [660428667, 'r', '6. 如果可以把自己的宠物照片或原创角色制作成专属手办，您的兴趣程度如何？ / 반려동물 사진이나 오리지널 캐릭터를 맞춤 피규어로 제작할 수 있다면 관심이 어느 정도 있으십니까?', ['非常感兴趣 / 매우 관심 있음', '比较感兴趣 / 관심 있는 편', '一般 / 보통', '不太感兴趣 / 별로 관심 없음', '完全不感兴趣 / 전혀 관심 없음']],
+ [683593491, 'c', '7. 您最希望定制的对象是？（可多选） / 가장 맞춤 제작하고 싶은 대상은 무엇입니까? (복수 선택)', ['自己的宠物 / 본인의 반려동물', '朋友或家人的宠物（礼物） / 친구 또는 가족의 반려동물 (선물용)', '原创角色或游戏角色 / 오리지널 캐릭터 또는 게임 캐릭터', '情侣、家人或个人形象 / 연인, 가족 또는 본인의 모습', '其他 / 기타']],
+ [123801141, 'r', '8. 您更喜欢哪种产品形式？ / 어떤 제품 형태를 더 선호하십니까?', ['还未上色的3D打印模型：收到专属未上色模型，到店亲手上色 / 아직 채색되지 않은 3D 프린팅 모델: 맞춤형 미채색 모델을 받아 매장에서 직접 채색', '上色完成的3D打印模型：收到已完成上色的模型 / 채색이 완료된 3D 프린팅 모델: 채색 완료된 모델을 배송받음', '两种都可以 / 둘 다 괜찮음', '都不感兴趣 / 둘 다 관심 없음']],
+ [347118765, 'c', '9. 对于还未上色的3D打印模型DIY，您最担心什么？（可多选） / 아직 채색되지 않은 3D 프린팅 모델 DIY에서 가장 걱정되는 점은 무엇입니까? (복수 선택)', ['不会上色、怕做不好 / 채색을 잘하지 못할까 봐 걱정됨', '成品与照片不像 / 완성품이 사진과 닮지 않을까 걱정됨', '价格偏高 / 가격이 비쌈', '需要到店，时间不方便 / 매장 방문이 필요해 시간이 맞지 않음', '制作时间太长 / 제작 시간이 너무 김', '卫生、颜料或材料安全 / 위생, 물감 또는 재료의 안전성', '没有明显担忧 / 특별히 걱정되는 점 없음', '其他 / 기타']],
+ [1099871723, 'r', '10. 若选择7cm还未上色的3D打印模型（含定制模型、配色卡及门店上色体验），您可接受的总价是？ / 7cm 미채색 3D 프린팅 모델(맞춤 모델, 색상 안내 카드 및 매장 채색 체험 포함)의 적정 총가격은 얼마입니까?', ['人民币低于¥100（约韩币₩33,000以下） / CNY ¥100 미만 (약 KRW ₩33,000 미만)', '人民币¥100–148（约韩币₩33,000–48,000） / CNY ¥100–148 (약 KRW ₩33,000–48,000)', '人民币约¥149（约韩币₩49,000） / CNY 약 ¥149 (약 KRW ₩49,000)', '人民币¥150–188（约韩币₩50,000–62,000） / CNY ¥150–188 (약 KRW ₩50,000–62,000)', '人民币¥189及以上（约韩币₩63,000及以上） / CNY ¥189 이상 (약 KRW ₩63,000 이상)', '不愿购买 / 구매 의향 없음']],
+ [1515781560, 'r', '11. 若选择10cm还未上色的3D打印模型（含门店体验），您可接受的总价是？ / 10cm 미채색 3D 프린팅 모델(매장 체험 포함)의 적정 총가격은 얼마입니까?', ['人民币低于¥150（约韩币₩47,000以下） / CNY ¥150 미만 (약 KRW ₩47,000 미만)', '人民币¥150–188（约韩币₩47,000–58,000） / CNY ¥150–188 (약 KRW ₩47,000–58,000)', '人民币约¥189（约韩币₩59,000） / CNY 약 ¥189 (약 KRW ₩59,000)', '人民币¥190–248（约韩币₩60,000–77,000） / CNY ¥190–248 (약 KRW ₩60,000–77,000)', '人民币¥249及以上（约韩币₩78,000及以上） / CNY ¥249 이상 (약 KRW ₩78,000 이상)', '不愿购买 / 구매 의향 없음']],
+ [1517009684, 'r', '12. 若选择7cm上色完成的3D打印模型（无需自行上色，直接配送到家），您可接受的价格是？ / 7cm 채색 완료 3D 프린팅 모델(직접 채색할 필요 없이 배송)의 적정 가격은 얼마입니까?', ['人民币低于¥150（约韩币₩48,000以下） / CNY ¥150 미만 (약 KRW ₩48,000 미만)', '人民币¥150–248（约韩币₩48,000–78,000） / CNY ¥150–248 (약 KRW ₩48,000–78,000)', '人民币约¥249（约韩币₩79,000） / CNY 약 ¥249 (약 KRW ₩79,000)', '人民币¥250–398（约韩币₩80,000–126,000） / CNY ¥250–398 (약 KRW ₩80,000–126,000)', '人民币¥399及以上（约韩币₩127,000及以上） / CNY ¥399 이상 (약 KRW ₩127,000 이상)', '不愿购买 / 구매 의향 없음']],
+ [1717391553, 'r', '13. 若选择10cm上色完成的3D打印模型，您可接受的价格是？ / 10cm 채색 완료 3D 프린팅 모델의 적정 가격은 얼마입니까?', ['人民币低于¥200（约韩币₩59,000以下） / CNY ¥200 미만 (약 KRW ₩59,000 미만)', '人民币¥200–398（约韩币₩60,000–118,000） / CNY ¥200–398 (약 KRW ₩60,000–118,000)', '人民币约¥399（约韩币₩119,000） / CNY 약 ¥399 (약 KRW ₩119,000)', '人民币¥400及以上（约韩币₩120,000及以上） / CNY ¥400 이상 (약 KRW ₩120,000 이상)', '不愿购买 / 구매 의향 없음']],
+ [2055089236, 'r', '14. 如果最终效果符合预期，您未来3个月内购买的可能性有多大？ / 최종 결과물이 기대에 부합한다면 향후 3개월 내 구매할 가능성은 어느 정도입니까?', ['一定会购买 / 반드시 구매하겠습니다', '很可能购买 / 구매할 가능성이 높습니다', '不确定 / 잘 모르겠습니다', '不太可能购买 / 구매 가능성이 낮습니다', '绝对不会购买 / 절대 구매하지 않을 것입니다']],
+ [1734180565, 'c', '15. 您更愿意通过什么方式体验或购买？（可多选） / 어떤 방식으로 체험하거나 구매하는 것을 더 선호하십니까? (복수 선택)', ['拼豆店或DIY工坊现场体验 / 비즈 공예점 또는 DIY 공방에서 현장 체험', '线上下单，寄到家 / 온라인 주문 후 배송받기', '宠物店、宠物美容店或宠物咖啡馆 / 반려동물 용품점, 미용실 또는 반려동물 카페', '学校或商场快闪活动 / 학교 또는 쇼핑몰 팝업 행사', '朋友推荐或团体活动 / 친구 추천 또는 단체 활동', '其他 / 기타']],
+ [244982320, 'c', '16. 您通常通过哪些渠道了解此类产品？（可多选） / 보통 어떤 경로로 이러한 제품을 알게 되십니까? (복수 선택)', ['小红书（Xiaohongshu） / 샤오홍슈(Xiaohongshu)', '抖音（Douyin） / 더우인(Douyin)', '微信（WeChat） / 위챗(WeChat)', 'Instagram / Instagram', 'TikTok / TikTok', 'Naver Blog / 네이버 블로그', '朋友或社群推荐 / 친구 또는 커뮤니티 추천', '线下门店 / 오프라인 매장', '其他 / 기타']],
+ [2137973108, 'c3', '17. 什么因素最能促使您下单？（最多选3项） / 어떤 요소가 구매를 가장 결정짓습니까? (최대 3개 선택)', ['与宠物/角色相似度高 / 반려동물 또는 캐릭터와 닮은 정도', '价格合理 / 합리적인 가격', '可以亲手制作 / 직접 만들 수 있음', '制作简单、有配色指导 / 제작이 쉽고 색상 안내가 제공됨', '材料安全、质量好 / 안전한 재료와 좋은 품질', '交付快 / 빠른 제작 및 배송', '适合送礼、有包装 / 선물하기 좋고 포장이 제공됨', '门店环境与服务 / 매장 분위기와 서비스']],
+ [1398034749, 't', '18. 您对 FIGUNI 这类产品还有什么建议或顾虑？（选填） / FIGUNI와 같은 제품에 대해 제안이나 우려 사항이 있으시면 자유롭게 적어 주세요. (선택)', []],
+];
+const T = {
+  kr: {
+    title: 'FIGUNI 소비자 수요 조사', home: '홈으로', kicker: 'FIGUNI 소비자 수요 조사', h1: 'AI 맞춤 피규어 × DIY 직접 채색 체험',
+    desc: 'FIGUNI는 반려동물 또는 오리지널 캐릭터 사진으로 맞춤 피규어를 제작하며, 매장에서 직접 채색하는 DIY와 채색이 완료된 제품을 배송받는 두 가지 방식을 제공합니다. 본 설문은 제품 및 시장 조사를 위한 익명 설문이며 이름이나 전화번호 등 직접 식별 정보는 수집하지 않습니다. 솔직한 의견을 부탁드립니다.',
+    c1: '익명', c2: '약 3~5분', c3: '18문항 · 모두 선택 응답',
+    howto: '별도 표시가 없는 문항은 단일 선택이며, ‘복수 선택’ 문항은 여러 개를 선택할 수 있습니다. 해당하지 않거나 잘 모르겠다면 건너뛰셔도 됩니다.',
+    multi: '복수 선택', max3: '최대 3개', opt: '선택 응답', limit: (n) => `${n} / 3개 선택`, full: '3개를 모두 골랐어요. 바꾸려면 하나를 해제해 주세요.',
+    ph: '자유롭게 적어 주세요', count: (n) => `${n} / 18 응답`,
+    send: '설문 제출하기', sending: '제출하는 중…', note: '답변은 익명으로 FIGUNI 구글 설문지에 제출되며, 제품·시장 조사에만 사용됩니다.',
+    empty: '한 문항 이상 답한 뒤 제출해 주세요.', fail: '제출하지 못했습니다. 네트워크를 확인한 뒤 다시 시도하거나 ', failLink: '구글 설문지에서 직접 작성해 주세요.',
+    thxH: '참여해 주셔서 감사합니다!', thxP: '보내 주신 답변은 FIGUNI의 제품과 가격을 정하는 데 그대로 반영됩니다.', thxDemo: '데모 체험하기', thxHome: '홈으로',
+  },
+  cn: {
+    title: 'FIGUNI 消费者需求调查问卷', home: '返回官网', kicker: 'FIGUNI 消费者需求调查问卷', h1: 'AI 定制专属手办 × DIY 亲手上色体验',
+    desc: 'FIGUNI 希望将宠物或原创角色照片制作成专属手办，提供“到店亲手上色 DIY”和“上色完成后寄到家”两种选择。本问卷仅用于产品与市场研究，匿名填写，不收集姓名、电话等直接身份信息。请根据真实想法作答。',
+    c1: '匿名填写', c2: '约 3–5 分钟', c3: '共 18 题 · 均可跳过',
+    howto: '除特别注明外，每题单选；标注“可多选”的题目可选多个答案。不适用或不确定时，可以跳过。',
+    multi: '可多选', max3: '最多选 3 项', opt: '选填', limit: (n) => `已选 ${n} / 3 项`, full: '已经选满 3 项，想换的话先取消一项。',
+    ph: '请随意填写', count: (n) => `已答 ${n} / 18`,
+    send: '提交问卷', sending: '正在提交…', note: '答案会匿名提交到 FIGUNI 的 Google 表单，仅用于产品与市场研究。',
+    empty: '请至少回答一题再提交。', fail: '提交没有成功，请检查网络后重试，或', failLink: '直接打开 Google 表单填写。',
+    thxH: '谢谢你的参与！', thxP: '你的回答会直接用于 FIGUNI 的产品和定价。', thxDemo: '体验 DEMO', thxHome: '返回官网',
+  },
+};
+const $ = (s, r = document) => r.querySelector(s);
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const split = (s) => { const i = s.indexOf(' / '); return i < 0 ? [s, s] : [s.slice(0, i), s.slice(i + 3)]; };
+const clean = (t) => t.replace(/^\d+\.\s*/, '').replace(/\s*[（(](可多选|最多选3项|选填|복수 선택|최대 3개 선택|선택)[）)]\s*$/, '');
+let lang = 'kr';
+try { if (sessionStorage.getItem('figuni-lang') === 'cn') lang = 'cn'; } catch (e) {}
+const DRAFT = 'figuni-survey-draft';
+
+// build the form once; texts are filled by render()
+const form = $('#form');
+Q.forEach(([entry, type, title, opts], qi) => {
+  const fs = document.createElement('fieldset'); fs.dataset.q = qi;
+  const kind = type === 't' ? 'text' : type === 'r' ? 'radio' : 'checkbox';
+  let html = `<legend><span class="qn" aria-hidden="true">${qi + 1}</span><span class="qt"></span></legend>`;
+  if (kind === 'text') html += `<textarea name="entry.${entry}" rows="4" maxlength="2000"></textarea>`;
+  else {
+    html += `<div class="opts" data-n="${opts.length}">` + opts.map((v, oi) => `<label class="opt"><input type="${kind}" name="entry.${entry}" value="${esc(v)}"><span class="mk" aria-hidden="true"></span><span class="lb" data-o="${oi}"></span></label>`).join('') + '</div>';
+    if (type === 'c3') html += '<p class="limit" aria-live="polite"></p>';
+  }
+  fs.innerHTML = html; form.appendChild(fs);
+});
+form.insertAdjacentHTML('beforeend', `<div class="send"><button class="btn" type="submit" id="send"><span></span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-5L15 10l-4.5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+  <p class="msg" id="msg" role="alert" hidden></p><p class="small" id="note"></p></div>`);
+
+function render() {
+  const t = T[lang], k = lang === 'cn' ? 0 : 1;
+  document.documentElement.lang = lang === 'cn' ? 'zh-CN' : 'ko';
+  document.title = t.title;
+  document.querySelectorAll('[data-t]').forEach((el) => { const v = t[el.dataset.t]; if (typeof v === 'string') el.textContent = v; });
+  document.querySelectorAll('[data-lang]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.lang === lang)));
+  form.querySelectorAll('fieldset').forEach((fs) => {
+    const [, type, title, opts] = Q[+fs.dataset.q];
+    const tag = type === 'c' ? t.multi : type === 'c3' ? t.max3 : type === 't' ? t.opt : '';
+    fs.querySelector('.qt').innerHTML = esc(clean(split(title)[k])) + (tag ? `<span class="tag">${esc(tag)}</span>` : '');
+    let longest = 0;
+    fs.querySelectorAll('.lb').forEach((lb) => {
+      const txt = split(opts[+lb.dataset.o])[k]; longest = Math.max(longest, txt.length);
+      const m = txt.match(/^(.+?)[：:]\s*(.+)$/);  // "head: detail" options (question 8)
+      lb.innerHTML = m && txt.length > 12 ? `<b>${esc(m[1])}</b><small>${esc(m[2])}</small>` : esc(txt);
+    });
+    const box = fs.querySelector('.opts'); if (box) box.classList.toggle('cols', longest <= (k ? 10 : 8));
+    const ta = fs.querySelector('textarea'); if (ta) ta.placeholder = t.ph;
+  });
+  $('#send span').textContent = t.send; $('#note').textContent = t.note;
+  update();
+}
+function answered(fs) {
+  const ta = fs.querySelector('textarea'); if (ta) return ta.value.trim() !== '';
+  return !!fs.querySelector('input:checked');
+}
+function update() {
+  const t = T[lang]; let n = 0;
+  form.querySelectorAll('fieldset').forEach((fs) => {
+    const a = answered(fs); fs.classList.toggle('done', a); if (a) n++;
+    const lim = fs.querySelector('.limit');
+    if (lim) {
+      const c = fs.querySelectorAll('input:checked').length;
+      fs.querySelectorAll('input').forEach((i) => { i.disabled = c >= 3 && !i.checked; });
+      lim.textContent = c >= 3 ? t.full : t.limit(c); lim.classList.toggle('full', c >= 3);
+    }
+  });
+  $('#bar').style.width = `${(n / Q.length) * 100}%`;
+  $('#count').textContent = t.count(n);
+  return n;
+}
+function saveDraft() {
+  try {
+    const d = {}; new FormData(form).forEach((v, key) => { (d[key] = d[key] || []).push(v); });
+    localStorage.setItem(DRAFT, JSON.stringify(d));
+  } catch (e) {}
+}
+function loadDraft() {
+  try {
+    const d = JSON.parse(localStorage.getItem(DRAFT) || 'null'); if (!d) return;
+    form.querySelectorAll('input').forEach((i) => { if ((d[i.name] || []).includes(i.value)) i.checked = true; });
+    form.querySelectorAll('textarea').forEach((ta) => { if (d[ta.name]) ta.value = d[ta.name][0]; });
+  } catch (e) {}
+}
+form.addEventListener('change', (e) => {
+  const fs = e.target.closest('fieldset'); const was = fs.classList.contains('done');
+  update(); saveDraft(); $('#msg').hidden = true;
+  // after a first single-choice answer, bring the next question into view if it is below the fold
+  if (e.target.type === 'radio' && !was) {
+    const next = fs.nextElementSibling;
+    if (next && next.getBoundingClientRect().top > window.innerHeight - 120 && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      setTimeout(() => next.scrollIntoView({ behavior: 'smooth', block: 'start' }), 160);
+    }
+  }
+});
+form.addEventListener('input', (e) => { if (e.target.tagName === 'TEXTAREA') { update(); saveDraft(); } });
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  const t = T[lang], msg = $('#msg'), btn = $('#send');
+  if (update() === 0) { msg.textContent = t.empty; msg.hidden = false; return; }
+  const body = new URLSearchParams();
+  new FormData(form).forEach((v, key) => { if (String(v).trim() !== '') body.append(key, String(v).trim()); });
+  const fbzx = String(Math.floor(Math.random() * 9e17) + 1e17) + String(Math.floor(Math.random() * 10));
+  body.append('fvv', '1'); body.append('pageHistory', '0'); body.append('fbzx', fbzx);
+  body.append('partialResponse', JSON.stringify([null, null, fbzx])); body.append('submissionTimestamp', '-1');
+  btn.disabled = true; $('#send span').textContent = t.sending;
+  try {
+    await fetch(`${FORM}/formResponse`, { method: 'POST', mode: 'no-cors', body });
+    try { localStorage.removeItem(DRAFT); } catch (er) {}
+    form.hidden = true; $('#intro').hidden = true; document.querySelector('.howto').hidden = true;
+    $('#thanks').hidden = false; $('#count').style.opacity = 0; $('#bar').style.width = '100%';
+    window.scrollTo({ top: 0 }); $('#thx-h').focus({ preventScroll: true });
+  } catch (er) {
+    msg.innerHTML = `${esc(t.fail)}<a href="${FORM}/viewform" target="_blank" rel="noopener">${esc(t.failLink)}</a>`; msg.hidden = false;
+    btn.disabled = false; $('#send span').textContent = t.send;
+  }
+});
+document.addEventListener('click', (e) => {
+  const b = e.target.closest('[data-lang]'); if (!b) return;
+  lang = b.dataset.lang; try { sessionStorage.setItem('figuni-lang', lang); } catch (er) {} render();
+});
+loadDraft(); render();
+})();
+</script>
+</body>
+</html>
