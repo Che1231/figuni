@@ -186,7 +186,17 @@ footer{padding:36px 0 48px;border-top:1px solid var(--line);font-size:14px;color
 footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px 32px}
 footer .wordmark{color:var(--ink);font-size:18px}
 
+/* survey band */
+.survey-band{padding:0 0 clamp(56px,7vw,96px)}
+.sv{background:var(--paper);border-radius:32px;padding:clamp(26px,4vw,44px);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:clamp(20px,4vw,48px);align-items:center}
+.sv-k{font-size:14px;font-weight:700;color:var(--muted);margin-bottom:10px}
+.sv h2{font-size:clamp(24px,2.8vw,34px)}
+.sv .lead{margin-top:12px;font-size:16px}
+.sv-btn{display:inline-flex;align-items:center;gap:10px;text-decoration:none;background:var(--ink);color:#fff;font-weight:700;font-size:17px;line-height:1;padding:17px 28px;border-radius:999px;white-space:nowrap;transition:background-color .15s}
+.sv-btn:hover{background:#2C3A5C}
+.sv-btn svg{width:18px;height:18px;flex:none}
 @media (max-width:960px){
+  .sv{grid-template-columns:1fr;justify-items:start}
   .nav ul{display:none}
   .nav .wrap{gap:14px}
   .nav .lang{margin-left:auto}
@@ -223,6 +233,7 @@ footer .wordmark{color:var(--ink);font-size:18px}
       <li><a href="#compare" data-t="navCompare"></a></li>
       <li><a href="#partners" data-t="navPartners"></a></li>
       <li><a href="#team" data-t="navTeam"></a></li>
+      <li><a href="/survey/" data-t="navSurvey"></a></li>
     </ul>
     <div class="lang" role="group" aria-label="Language">
       <button type="button" data-lang="kr" aria-pressed="true">한국어</button>
@@ -319,6 +330,19 @@ footer .wordmark{color:var(--ink);font-size:18px}
     </div>
   </section>
 
+  <section class="survey-band" aria-labelledby="sv-h">
+    <div class="wrap">
+      <div class="sv">
+        <div>
+          <p class="sv-k" data-t="svK"></p>
+          <h2 id="sv-h" data-t="svH"></h2>
+          <p class="lead" data-t="svSub"></p>
+        </div>
+        <a class="sv-btn" href="/survey/"><span data-t="svCta"></span><svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M4 10h11m-4.5-5L15 10l-4.5 5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg></a>
+      </div>
+    </div>
+  </section>
+
   <section class="final" aria-labelledby="fin-h">
     <div class="wrap">
       <div class="panel">
@@ -351,7 +375,9 @@ footer .wordmark{color:var(--ink);font-size:18px}
 const T = {
   cn: {
     title: 'FIGUNI｜一张照片，亲手上色的专属手办',
-    navHow: '流程', navCompare: '对比', navPartners: '合作', navTeam: '团队',
+    navHow: '流程', navCompare: '对比', navPartners: '合作', navTeam: '团队', navSurvey: '问卷',
+    svK: '消费者需求调查 · 约 3–5 分钟', svH: '花 3 分钟，帮我们一起把 FIGUNI 做好',
+    svSub: '告诉我们你对宠物和角色手办的想法，以及能接受的价格。匿名填写，答案会直接用于产品和定价。', svCta: '参与问卷',
     cta: '进入 DEMO', seeHow: '看看怎么做',
     h1: '照片里的它，\n由你亲手上色',
     heroSub: '上传一张宠物或角色的照片，AI 为它设计专属白模，寄到你附近的 DIY 店。照着专属配色卡按编号上色，完成只属于你的那一只。',
@@ -400,7 +426,9 @@ const T = {
   },
   kr: {
     title: 'FIGUNI｜사진 한 장으로, 내 손으로 칠하는 나만의 피규어',
-    navHow: '이용 방법', navCompare: '비교', navPartners: '제휴', navTeam: '팀',
+    navHow: '이용 방법', navCompare: '비교', navPartners: '제휴', navTeam: '팀', navSurvey: '설문',
+    svK: '소비자 수요 조사 · 약 3~5분', svH: '3분만 내어 FIGUNI를 함께 만들어 주세요',
+    svSub: '반려동물·캐릭터 피규어에 대한 생각과 적정 가격을 알려 주세요. 익명이며, 답변은 제품과 가격을 정하는 데 그대로 반영됩니다.', svCta: '설문 참여하기',
     cta: '데모 체험하기', seeHow: '어떻게 만드나요',
     h1: '우리 아이 사진이,\n내가 칠한 피규어로',
     heroSub: '반려동물이나 캐릭터 사진을 올리면 AI가 나만의 화이트 모델을 디자인해 가까운 DIY 공방으로 보냅니다. 전용 컬러 카드의 번호대로 칠하면, 세상에 하나뿐인 피규어가 완성됩니다.',
