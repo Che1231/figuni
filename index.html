@@ -153,6 +153,45 @@ table.compare{width:100%;min-width:760px;border-collapse:separate;border-spacing
 .legend i{width:14px;height:14px;border-radius:4px;align-self:center}
 .legend b{font-family:var(--f-brand);font-weight:600;font-size:22px;line-height:1}
 
+/* price */
+.prices{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,28px);list-style:none;margin:0;padding:0}
+.pcard{background:var(--paper);border-radius:28px;padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;gap:12px}
+.pcard .k{font-size:15px;font-weight:700;color:var(--muted)}
+.pcard .v{font-family:var(--f-brand);font-weight:600;font-size:clamp(38px,3.8vw,48px);line-height:1;letter-spacing:-.01em}
+.pcard .v small{font-family:var(--f-text);font-size:18px;font-weight:700;margin-left:4px;letter-spacing:0}
+.pcard .split{font-size:14px;font-weight:700;background:var(--primer-2);border-radius:12px;padding:8px 12px;align-self:flex-start}
+.pcard p{color:var(--muted);font-size:15px;line-height:1.6}
+.price-note{margin-top:22px}
+
+/* proof */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,22px);list-style:none;margin:0;padding:0}
+.stat{background:var(--paper);border-radius:24px;padding:24px 22px;display:flex;flex-direction:column;gap:12px}
+.stat .n{font-family:var(--f-brand);font-weight:600;font-size:clamp(36px,3.4vw,46px);line-height:1;letter-spacing:-.01em}
+.stat p{font-size:15px;color:var(--muted);line-height:1.6}
+.mini{display:grid;gap:8px;margin-top:auto;padding-top:4px}
+.mini div{display:grid;grid-template-columns:64px 1fr 46px;align-items:center;gap:8px;font-size:13px;color:var(--muted)}
+.mini .tr{display:block;height:10px;border-radius:5px;background:var(--primer-2);overflow:hidden}
+.mini .tr i{display:block;height:100%;border-radius:5px;background:var(--line)}
+.mini .hi .tr i{background:var(--ink)}
+.mini .hi{color:var(--ink);font-weight:700}
+.mini b{text-align:right;font-weight:700}
+.field{list-style:none;margin:clamp(14px,2vw,22px) 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:clamp(14px,2vw,22px)}
+.field li{border:1px solid var(--line);border-radius:20px;padding:18px 22px;font-size:16px;display:grid;grid-template-columns:26px 1fr;gap:12px;align-items:start}
+.field li::before{content:"✓";width:26px;height:26px;border-radius:50%;background:var(--ink);color:var(--resin);display:grid;place-items:center;font-size:13px;font-weight:700;margin-top:1px}
+.proof-note{margin-top:22px}
+
+/* plan */
+.phases{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(16px,2.4vw,28px);list-style:none;margin:0;padding:0}
+.phase{background:var(--paper);border-radius:28px;padding:clamp(24px,3vw,34px);display:flex;flex-direction:column;gap:8px}
+.phase .top{display:flex;align-items:center;gap:12px}
+.phase .num{font-family:var(--f-brand);font-weight:600;font-size:15px;width:30px;height:30px;border-radius:50%;display:inline-grid;place-items:center;background:var(--ink);color:var(--resin);flex:none}
+.phase .when{font-size:14px;font-weight:700;color:var(--muted)}
+.phase h3{margin-top:6px}
+.phase p{color:var(--muted);font-size:15.5px}
+.phase .tag{margin-top:auto;padding-top:10px;font-size:13px;font-weight:700}
+.phase .tag span{display:inline-block;padding:4px 10px;border-radius:999px;background:var(--primer-2)}
+.plan-note{margin-top:22px}
+
 /* partners */
 .partners{background:var(--ink);color:var(--resin)}
 .partners .lead{color:#B9C1CE}
@@ -203,7 +242,8 @@ footer .wordmark{color:var(--ink);font-size:18px}
   .hero .wrap{grid-template-columns:1fr}
   .studio{max-width:560px;width:100%;margin:0 auto}
   .steps{grid-template-columns:repeat(2,minmax(0,1fr));row-gap:44px}
-  .demand .wrap,.cols,.people,.final .panel{grid-template-columns:1fr}
+  .demand .wrap,.cols,.people,.final .panel,.prices,.phases,.field{grid-template-columns:1fr}
+  .stats{grid-template-columns:repeat(2,minmax(0,1fr))}
   .final .panel{text-align:left}
 }
 @media (max-width:560px){
@@ -217,6 +257,7 @@ footer .wordmark{color:var(--ink);font-size:18px}
   .paint .txt{min-width:0}
   .steps{grid-template-columns:1fr}
   .person{grid-template-columns:1fr}
+  .stats{grid-template-columns:1fr}
   .final .panel{border-radius:28px}
 }
 @media (min-width:961px) and (max-height:820px){.hero{padding-top:12px}.niche{max-height:50vh}.paint{padding:10px 8px}}
@@ -230,7 +271,8 @@ footer .wordmark{color:var(--ink);font-size:18px}
     <a class="wordmark" href="/" aria-label="FIGUNI">FIGUNI<small>피규니</small></a>
     <ul>
       <li><a href="#how" data-t="navHow"></a></li>
-      <li><a href="#compare" data-t="navCompare"></a></li>
+      <li><a href="#price" data-t="navPrice"></a></li>
+      <li><a href="#proof" data-t="navProof"></a></li>
       <li><a href="#partners" data-t="navPartners"></a></li>
       <li><a href="#team" data-t="navTeam"></a></li>
       <li><a href="/survey/" data-t="navSurvey"></a></li>
@@ -283,6 +325,17 @@ footer .wordmark{color:var(--ink);font-size:18px}
     </div>
   </section>
 
+  <section class="block" id="price" aria-labelledby="price-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="price-h" data-t="priceH"></h2>
+        <p class="lead" data-t="priceSub"></p>
+      </div>
+      <ul class="prices" id="prices"></ul>
+      <p class="note price-note" data-t="priceNote"></p>
+    </div>
+  </section>
+
   <section class="block" id="compare" aria-labelledby="cmp-h" style="padding-top:0">
     <div class="wrap">
       <div class="head">
@@ -293,6 +346,18 @@ footer .wordmark{color:var(--ink);font-size:18px}
         <table class="compare" id="cmp"></table>
       </div>
       <p class="note compare-note" data-t="cmpNote"></p>
+    </div>
+  </section>
+
+  <section class="block" id="proof" aria-labelledby="proof-h" style="padding-top:0">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="proof-h" data-t="proofH"></h2>
+        <p class="lead" data-t="proofSub"></p>
+      </div>
+      <ul class="stats" id="stats"></ul>
+      <ul class="field" id="field"></ul>
+      <p class="note proof-note" data-t="proofNote"></p>
     </div>
   </section>
 
@@ -320,7 +385,18 @@ footer .wordmark{color:var(--ink);font-size:18px}
     </div>
   </section>
 
-  <section class="block" id="team" aria-labelledby="team-h">
+  <section class="block" id="plan" aria-labelledby="plan-h">
+    <div class="wrap">
+      <div class="head">
+        <h2 id="plan-h" data-t="planH"></h2>
+        <p class="lead" data-t="planSub"></p>
+      </div>
+      <ol class="phases" id="phases"></ol>
+      <p class="note plan-note" data-t="planNote"></p>
+    </div>
+  </section>
+
+  <section class="block" id="team" aria-labelledby="team-h" style="padding-top:0">
     <div class="wrap">
       <div class="head">
         <h2 id="team-h" data-t="teamH"></h2>
@@ -375,9 +451,9 @@ footer .wordmark{color:var(--ink);font-size:18px}
 const T = {
   cn: {
     title: 'FIGUNI｜一张照片，亲手上色的专属手办',
-    navHow: '流程', navCompare: '对比', navPartners: '合作', navTeam: '团队', navSurvey: '问卷',
+    navHow: '流程', navCompare: '对比', navPrice: '价格', navProof: '验证', navPartners: '合作', navTeam: '团队', navSurvey: '问卷',
     svK: '消费者需求调查 · 约 3–5 分钟', svH: '花 3 分钟，帮我们一起把 FIGUNI 做好',
-    svSub: '告诉我们你对宠物和角色手办的想法，以及能接受的价格。匿名填写，答案会直接用于产品和定价。', svCta: '参与问卷',
+    svSub: '告诉我们你对宠物和角色手办的想法，以及能接受的价格。截至 11 月 9 日已有 153 人参与，问卷仍在继续收集；匿名填写，答案会直接用于产品和定价。', svCta: '参与问卷',
     cta: '进入 DEMO', seeHow: '看看怎么做',
     h1: '照片里的它，\n由你亲手上色',
     heroSub: '上传一张宠物或角色的照片，AI 为它设计专属白模，寄到你附近的 DIY 店。照着专属配色卡按编号上色，完成只属于你的那一只。',
@@ -385,40 +461,66 @@ const T = {
     done: '四种颜色涂完，就是这个样子',
     caption: '豆豆是团队成员家的柴犬，这是用它的照片实测生成的 3D 模型。', drag: '可以拖动旋转。',
     paints: [['焦糖', '身体、头顶、尾巴'], ['奶油', '胸口、口鼻、腿'], ['樱粉', '舌头'], ['可可', '眼鼻嘴、肉垫']],
-    howH: '从照片到手办，四步', howSub: 'AI 负责设计，工厂负责打印，最好玩的上色留给你。',
+    howH: '从照片到手办，四步', howSub: '设计交给 AI，品控由 FIGUNI 负责，打印交给合作工厂，最好玩的上色留给你。',
     steps: [
       ['上传照片', '正脸或侧身都可以，毛色和花纹看得清就好。', '一张照片就够', 'photo.jpg', '团队成员家柴犬豆豆的原照片'],
       ['AI 设计', '生成几张 Q 版效果图，挑一张最像它的。', '约 10 分钟', 'cand1.jpg', 'AI 生成的豆豆 Q 版效果'],
-      ['3D 白模', 'AI 把效果图变成 3D 模型，自动检查能不能打印，再交给合作工厂。', '约 5 分钟出模型', 'white.jpg', '豆豆的 3D 白模渲染'],
-      ['亲手上色', '白模连同专属配色卡寄到附近的 DIY 店，你按编号涂完。', '约 7–10 天到店', 'post_after.jpg', '上色完成的豆豆手办效果'],
+      ['3D 白模', 'AI 把效果图变成 3D 模型；FIGUNI 审核设计后向中国合作工厂下单，并负责打印成品的品控。', '约 5 分钟出模型', 'white.jpg', '豆豆的 3D 白模渲染'],
+      ['亲手上色', '通过品控的白模连同专属配色卡寄到附近的 DIY 店，你按编号涂完。', '约 10–12 天到店', 'post_after.jpg', '上色完成的豆豆手办效果'],
     ],
-    howNote: '时间来自团队 2026 年 10 月用豆豆的照片实测；到店时间是目标值，含打印和寄送。',
+    howNote: '时间来自团队 2026 年 10 月用豆豆的照片实测。到店时间包括打印 2–4 天、FIGUNI 品控约 1 天、寄到韩国约 6 天（实测）；首尔自建打印工作室后，目标缩短到 3–5 天。',
+    priceH: '含门店体验，49,000 韩元起',
+    priceSub: '白模和配色卡在网上付款，门店座位费到店支付，座位费全部归门店。',
+    prices: [
+      ['白模 DIY · 7cm', '49,000', '韩元', '网店 39,000 + 门店座位费 10,000', '专属白模、配色卡和门店颜料，到店照着编号上色。'],
+      ['白模 DIY · 10cm', '59,000', '韩元', '网店 49,000 + 门店座位费 10,000', '尺寸更大，适合想涂得更细致的人。'],
+      ['彩模到家 · 7cm', '89,000', '韩元', '直接寄到家', '全彩打印的成品，适合送礼或不想动手的人。'],
+    ],
+    priceNote: '拟定上市价格，将在试点中用真实订单再验证（商业计划书 4-1）。',
+    proofH: '需求，我们用数据验证过',
+    proofSub: '2026 年 10 月 25 日至 11 月 9 日，我们在韩国和中国收回 153 份问卷，也亲自去拼豆店把白模涂了一遍。',
+    stats: [
+      ['153', '中韩问卷有效样本（韩国 62 · 中国 91），信度 α = 0.91。', null],
+      ['57.1%', '养宠物或有原创角色的人里，购买意向很高的比例，是其他人的 2.6 倍。', [['核心人群', 57.1, 1], ['其他人', 21.8, 0]]],
+      ['+12.6%p', '能接受 49,000 韩元 DIY 价格的比例，韩国比中国高 12.6 个百分点。', [['韩国', 51.7, 1], ['中国', 39.1, 0]]],
+      ['7,000+', '我们正在运营的 TikTok 账号粉丝数。', null],
+    ],
+    field: ['韩国一家拼豆店的店长同意试点，愿意接待带白模来上色的顾客。', '在中国打印的 7cm 白模 6 天寄到韩国；第一次上色，约 25 分钟就涂完了。'],
+    proofNote: '问卷通过官网发放，属于便利抽样（18–34 岁占 76.5%）；详细分析见商业计划书 3-2。',
+    planH: '三步走，逐步扩大',
+    planSub: '前期不建工厂、不开门店，订单增长到哪一步，就扩大到哪一步。',
+    phases: [
+      ['第一步', '网店 + 第一家试点门店', '用彩模到家验证需求，积累第一批顾客、制作经验和技术壁垒。', '2027 年末合作门店 5 家'],
+      ['第二步', '首尔合作门店扩到 20 家', '门店扩张的同时，把彩模成本降到 5 万韩元以下。', '2028 年末合作门店 20 家'],
+      ['第三步', '门店 50 家 + 首尔打印工作室', '月订单稳定在 800 单以上后，在首尔自建 3D 打印工作室，把 DIY 交付缩短到 3–5 天。', '2029 年末合作门店 50 家'],
+    ],
+    planNote: '预计第 3 年（2029 年）营业利润转正（商业计划书 3-9）。',
     cmpH: '专属，又能亲手完成',
     cmpSub: '现有的选择里，要么是你家那只却只能买成品，要么能自己动手但人人做同一款。FIGUNI 把两件事放在一起。',
-    cols: [['FIGUNI', ''], ['AI 彩模', '京东、LabPop 等'], ['手工定制', '羊毛毡、idus 等'], ['通用 DIY', '拼豆、绘画咖啡馆']],
+    cols: [['FIGUNI', ''], ['AI 彩模', '뭉클、京东、LabPop 等'], ['手工定制', '羊毛毡、idus 等'], ['通用 DIY', '拼豆、绘画咖啡馆']],
     rows: [
       ['作品是你家那只', ['y', '是'], ['y', '是'], ['y', '是'], ['n', '否，大家做同一款']],
       ['亲手完成', ['y', '是'], ['n', '否'], ['n', '否'], ['y', '是']],
-      ['价格', '149–189 元，含门店体验', '99–400 元', '200–2,000 元', '人均 10–220 元/次'],
-      ['交付周期', '约 7–10 天（目标）', '最快约 7 天', '3 天至 2 个月', '当场完成'],
+      ['价格', '49,000–59,000 韩元，含门店座位费', '69,000 韩元起', '27–43 万韩元', '每次 2–6.5 万韩元'],
+      ['交付周期', '约 10–12 天（首尔自建打印后 3–5 天）', '最快约 7 天', '10 天至 2 个月', '当场完成'],
       ['线下体验', '合作 DIY 店', '无', '无', '有'],
     ],
-    cmpNote: '价格和周期来自公开报价与门店调研，详见商业计划书 2-3。',
+    cmpNote: '韩国市场价格和周期，来自公开报价与门店调研，详见商业计划书 2-3。',
     demH: '46 条真实评论里，29 条在问多少钱',
     demSub: '我们在 Bilibili、抖音、小红书和 Reddit 的宠物与真人手办内容下，逐条核对了真实评论。大家看到效果就想要，却找不到能放心下单的地方。',
     legend: [[4, '说愿意付钱'], [2, '表示要下单'], [29, '在问价格'], [11, '在问怎么定制、在哪买']],
     demNote: '团队逐条核对公开评论的结果（2026 年 10 月）。',
     parH: '门店和工厂，都不用多投入',
-    parSub: 'FIGUNI 不开工厂、不开门店，把订单交给已经在做这件事的人。',
+    parSub: 'FIGUNI 前期不建工厂、不开门店，把订单交给已经在做这件事的人；设计审核和打印成品的品控由 FIGUNI 负责。',
     partners: [
-      ['DIY 店', '拼豆店、手作店', ['白模、配色卡和物料由 FIGUNI 提供，门店零投入', '门店出座位和入门讲解，体验费全归门店', '每一单另有分成', '顾客为自家宠物而来，工作日也有理由进店']],
-      ['3D 打印工厂', '树脂与多色打印', ['收到的是已通过可打印检查的标准文件', '订单版权清晰、按单生产，不用自己获客', '树脂和多色订单，单价更高']],
+      ['DIY 店', '拼豆店、手作店', ['白模、配色卡和物料由 FIGUNI 提供，门店零投入', '门店出座位和入门讲解，座位费（1 小时 1 万韩元）全归门店', '门店带来的订单，每单另分成 2,000 韩元', '顾客为自家宠物而来，工作日也有理由进店']],
+      ['3D 打印工厂', '中国合作工厂 · 树脂与多色打印', ['收到的是经 FIGUNI 审核、已通过可打印检查的标准文件', '订单版权清晰，顾客付款后才生产，不用自己获客', '出货前由 FIGUNI 按检查清单验收，合格才发货', '树脂和多色订单，单价更高']],
     ],
     teamH: '两个人，从顾客一直到工厂',
     teamSub: '汉阳大学一般研究生院全球技术经营专业的两名中国留学生，一人对接顾客、内容和门店，一人对接数据、工厂和供应商。',
     people: [
-      ['陈', '陈思羽', 'CHEN SIYU', '项目负责人，产品与增长', ['创立光燧互动网络科技，任创始人兼董事长', '搭建“AI 内容 + TikTok 引流”的获客模式', '曾任网易游戏、冰川网络广告设计']],
-      ['胡', '胡蝶', 'HU DIE', '市场与供应链负责人', ['中韩市场调研与用户访谈', '单位经济、转化与复购数据分析', '打样品控、代工厂与供应商开发']],
+      ['陈', '陈思羽', 'CHEN SIYU', '项目负责人，产品与增长', ['创立光燧互动网络科技，任创始人兼董事长', '搭建“AI 内容 + TikTok 引流”的获客模式，总播放破 8,000 万', '曾任网易游戏、冰川网络广告设计']],
+      ['胡', '胡蝶', 'HU DIE', '市场与供应链负责人', ['中韩市场调研与用户访谈，153 份问卷分析', '单位经济、转化与复购数据分析', '打样品控、代工厂与供应商开发']],
     ],
     finH: '在手机上走一遍完整流程',
     finSub: '上传照片、挑效果图、转动 3D 模型、看配色卡、选方案下单，都可以在 DEMO 里体验。AI 步骤用豆豆的实测结果代替。',
@@ -426,9 +528,9 @@ const T = {
   },
   kr: {
     title: 'FIGUNI｜사진 한 장으로, 내 손으로 칠하는 나만의 피규어',
-    navHow: '이용 방법', navCompare: '비교', navPartners: '제휴', navTeam: '팀', navSurvey: '설문',
+    navHow: '이용 방법', navCompare: '비교', navPrice: '가격', navProof: '검증', navPartners: '제휴', navTeam: '팀', navSurvey: '설문',
     svK: '소비자 수요 조사 · 약 3~5분', svH: '3분만 내어 FIGUNI를 함께 만들어 주세요',
-    svSub: '반려동물·캐릭터 피규어에 대한 생각과 적정 가격을 알려 주세요. 익명이며, 답변은 제품과 가격을 정하는 데 그대로 반영됩니다.', svCta: '설문 참여하기',
+    svSub: '반려동물·캐릭터 피규어에 대한 생각과 적정 가격을 알려 주세요. 11월 9일까지 153명이 참여했고, 지금도 답변을 받고 있습니다. 익명이며, 답변은 제품과 가격을 정하는 데 그대로 반영됩니다.', svCta: '설문 참여하기',
     cta: '데모 체험하기', seeHow: '어떻게 만드나요',
     h1: '우리 아이 사진이,\n내가 칠한 피규어로',
     heroSub: '반려동물이나 캐릭터 사진을 올리면 AI가 나만의 화이트 모델을 디자인해 가까운 DIY 공방으로 보냅니다. 전용 컬러 카드의 번호대로 칠하면, 세상에 하나뿐인 피규어가 완성됩니다.',
@@ -436,22 +538,48 @@ const T = {
     done: '네 가지 색을 다 칠하면 이런 모습이에요',
     caption: '두두는 팀원이 키우는 시바견입니다. 두두의 사진으로 직접 만든 3D 모델이에요.', drag: '드래그해서 돌려 볼 수 있습니다.',
     paints: [['캐러멜', '몸통, 머리 위, 꼬리'], ['크림', '가슴, 주둥이, 다리'], ['체리 핑크', '혀'], ['코코아', '눈, 코, 입, 발바닥']],
-    howH: '사진에서 피규어까지, 네 단계', howSub: '디자인은 AI가, 출력은 공장이, 가장 재미있는 채색은 고객이 합니다.',
+    howH: '사진에서 피규어까지, 네 단계', howSub: '디자인은 AI가, 품질 관리는 FIGUNI가, 출력은 협력 공장이, 가장 재미있는 채색은 고객이 합니다.',
     steps: [
       ['사진 올리기', '정면이든 옆모습이든 괜찮아요. 털 색과 무늬만 잘 보이면 됩니다.', '사진 한 장이면 충분', 'photo.jpg', '팀원의 시바견 두두 원본 사진'],
       ['AI 디자인', '귀여운 SD 시안 몇 장 중에서 가장 닮은 한 장을 고릅니다.', '약 10분', 'cand1.jpg', 'AI가 만든 두두의 SD 시안'],
-      ['3D 화이트 모델', 'AI가 시안을 3D 모델로 만들고, 출력 가능한지 자동으로 확인한 뒤 제휴 공장으로 보냅니다.', '약 5분이면 모델 완성', 'white.jpg', '두두의 3D 화이트 모델 렌더'],
-      ['직접 채색', '화이트 모델과 전용 컬러 카드가 가까운 DIY 공방에 도착하면, 번호대로 칠합니다.', '약 7–10일 후 공방 도착', 'post_after.jpg', '채색을 마친 두두 피규어'],
+      ['3D 화이트 모델', 'AI가 시안을 3D 모델로 만들면, FIGUNI가 디자인을 검수해 중국 협력 공장에 주문하고 출력물 품질까지 책임집니다.', '약 5분이면 모델 완성', 'white.jpg', '두두의 3D 화이트 모델 렌더'],
+      ['직접 채색', '검수를 통과한 화이트 모델과 전용 컬러 카드가 가까운 DIY 공방에 도착하면, 번호대로 칠합니다.', '약 10–12일 후 공방 도착', 'post_after.jpg', '채색을 마친 두두 피규어'],
     ],
-    howNote: '시간은 2026년 10월 두두의 사진으로 팀이 직접 측정한 값입니다. 공방 도착 기간은 출력과 배송을 포함한 목표치입니다.',
+    howNote: '시간은 2026년 10월 두두의 사진으로 팀이 직접 측정한 값입니다. 공방 도착까지 출력 2–4일, FIGUNI 품질 검수 약 1일, 한국 배송 약 6일(실측)이 걸리며, 서울에 출력 스튜디오를 세우면 3–5일이 목표입니다.',
+    priceH: '공방 체험까지, 49,000원부터',
+    priceSub: '화이트 모델과 컬러 카드는 온라인에서 결제하고, 공방 좌석비는 매장에서 냅니다. 좌석비는 전액 공방 몫입니다.',
+    prices: [
+      ['화이트 DIY · 7cm', '49,000', '원', '온라인 39,000원 + 공방 좌석비 10,000원', '나만의 화이트 모델, 전용 컬러 카드, 공방 물감. 번호대로 칠하면 완성됩니다.'],
+      ['화이트 DIY · 10cm', '59,000', '원', '온라인 49,000원 + 공방 좌석비 10,000원', '더 크게, 더 섬세하게 칠하고 싶을 때.'],
+      ['컬러 완제품 · 7cm', '89,000', '원', '집으로 배송', '풀컬러로 출력한 완제품. 선물이나 직접 칠하기 어려운 분께.'],
+    ],
+    priceNote: '출시 예정 가격입니다. 시범 운영에서 실제 주문으로 다시 검증합니다(사업계획서 4-1).',
+    proofH: '수요는 숫자로 확인했습니다',
+    proofSub: '2026년 10월 25일부터 11월 9일까지 한국과 중국에서 설문 153부를 모았고, 펄러비즈 매장을 직접 찾아가 칠해 봤습니다.',
+    stats: [
+      ['153', '한·중 설문 응답(한국 62 · 중국 91), 신뢰도 α = 0.91.', null],
+      ['57.1%', '반려동물이나 자기 캐릭터가 있는 응답자의 높은 구매 의향. 나머지 응답자의 2.6배입니다.', [['핵심층', 57.1, 1], ['그 외', 21.8, 0]]],
+      ['+12.6%p', '4만 9천 원 DIY 가격을 받아들인 비율은 한국이 중국보다 12.6%p 높았습니다.', [['한국', 51.7, 1], ['중국', 39.1, 0]]],
+      ['7,000+', '저희가 운영하는 틱톡 계정의 팔로워 수입니다.', null],
+    ],
+    field: ['펄러비즈 매장 사장님이 화이트 모델을 가져와 칠하는 손님을 받겠다며 시범 운영에 동의했습니다.', '중국에서 출력한 7cm 화이트 모델이 6일 만에 한국에 도착했고, 처음 칠해 봤는데도 약 25분이면 충분했습니다.'],
+    proofNote: '설문은 공식 홈페이지에서 진행한 편의 표본입니다(18–34세 76.5%). 자세한 분석은 사업계획서 3-2를 참고하세요.',
+    planH: '세 단계로 키워 갑니다',
+    planSub: '초기에는 공장도 매장도 짓지 않고, 주문이 쌓이는 만큼 한 단계씩 넓힙니다.',
+    phases: [
+      ['1단계', '온라인 스토어 + 첫 시범 매장', '컬러 완제품 판매로 수요를 검증하며 첫 고객과 제작 노하우, 기술 장벽을 쌓습니다.', '2027년 말 협력 매장 5곳'],
+      ['2단계', '서울 협력 매장 20곳', '매장을 늘리면서 컬러 완제품 원가를 5만 원 이하로 낮춥니다.', '2028년 말 협력 매장 20곳'],
+      ['3단계', '매장 50곳 + 서울 출력 스튜디오', '월 주문이 800건 이상으로 안정되면 서울에 3D 프린팅 스튜디오를 세워 DIY 배송을 3–5일로 줄입니다.', '2029년 말 협력 매장 50곳'],
+    ],
+    planNote: '3년 차(2029년)에 영업이익 흑자 전환을 예상합니다(사업계획서 3-9).',
     cmpH: '나만의 작품을, 내 손으로',
     cmpSub: '지금까지는 우리 아이를 닮은 완제품을 사거나, 직접 만들되 모두 같은 도안을 쓰는 것 중 하나였습니다. FIGUNI는 이 둘을 합쳤습니다.',
     cols: [['FIGUNI', ''], ['AI 컬러 피규어', '징둥, LabPop, 뭉클'], ['수공예 맞춤', '양모펠트, idus'], ['범용 DIY', '펄러비즈, 드로잉카페']],
     rows: [
       ['나만의 작품', ['y', '예'], ['y', '예'], ['y', '예'], ['n', '아니요, 모두 같은 도안']],
       ['직접 완성', ['y', '예'], ['n', '아니요'], ['n', '아니요'], ['y', '예']],
-      ['가격', '49,000–59,000원, 공방 체험 포함', '69,000원부터', '27만–43만 원', '회당 2만–6.5만 원'],
-      ['제작 기간', '약 7–10일(목표)', '최단 약 7일', '3일–2개월', '현장 완성'],
+      ['가격', '49,000–59,000원, 공방 좌석비 포함', '69,000원부터', '27만–43만 원', '회당 2만–6.5만 원'],
+      ['제작 기간', '약 10–12일(서울 출력 후 3–5일)', '최단 약 7일', '10일–2개월', '현장 완성'],
       ['오프라인 체험', '제휴 DIY 공방', '없음', '없음', '있음'],
     ],
     cmpNote: '가격과 기간은 공개 판매가와 매장 조사 기준입니다(사업계획서 2-3).',
@@ -460,16 +588,16 @@ const T = {
     legend: [[4, '돈을 내겠다'], [2, '주문하겠다'], [29, '가격 문의'], [11, '제작 방법·구매처 문의']],
     demNote: '팀이 공개 댓글을 하나씩 확인한 결과입니다(2026년 10월).',
     parH: '공방도 공장도, 추가 투자 없이',
-    parSub: 'FIGUNI는 공장도 매장도 짓지 않고, 이미 그 일을 하고 있는 곳에 주문을 연결합니다.',
+    parSub: 'FIGUNI는 초기에 공장도 매장도 짓지 않고, 이미 그 일을 하고 있는 곳에 주문을 연결합니다. 디자인 검수와 출력물 품질 관리는 FIGUNI가 책임집니다.',
     partners: [
-      ['DIY 공방', '펄러비즈·공예 공방', ['화이트 모델, 컬러 카드, 재료는 FIGUNI가 제공해 초기 비용 0원', '공방은 좌석과 기초 강습만, 체험비는 전액 공방 수익', '주문마다 수수료를 추가로 받습니다', '자기 반려동물을 만들러 오는 고객이라 평일에도 방문 이유가 생깁니다']],
-      ['3D 프린팅 공장', '레진·멀티컬러 출력', ['출력 가능 여부를 검사한 표준 파일로 받습니다', '저작권이 명확한 주문을 건별로 생산해 따로 영업할 필요가 없습니다', '레진·멀티컬러 주문으로 단가가 높습니다']],
+      ['DIY 공방', '펄러비즈·공예 공방', ['화이트 모델, 컬러 카드, 재료는 FIGUNI가 제공해 초기 비용 0원', '공방은 좌석과 기초 강습만, 좌석비(1시간 10,000원)는 전액 공방 수익', '공방에서 들어온 주문은 건당 2,000원을 추가로 정산', '자기 반려동물을 만들러 오는 고객이라 평일에도 방문 이유가 생깁니다']],
+      ['3D 프린팅 공장', '중국 협력 공장 · 레진·멀티컬러 출력', ['FIGUNI가 검수하고 출력 가능 여부까지 확인한 표준 파일로 받습니다', '저작권이 명확한 주문을 결제 후에만 생산해 재고 부담도, 따로 영업할 필요도 없습니다', '출고 전 FIGUNI가 체크리스트로 품질을 검수하고, 통과한 것만 발송합니다', '레진·멀티컬러 주문으로 단가가 높습니다']],
     ],
     teamH: '고객부터 공장까지, 두 사람',
     teamSub: '한양대학교 일반대학원 글로벌기술경영 전공의 중국 유학생 두 명입니다. 한 명은 고객·콘텐츠·매장을, 한 명은 데이터·공장·공급업체를 맡습니다.',
     people: [
-      ['진', '진시우', 'CHEN SIYU', '프로젝트 총괄, 제품·성장', ['광쑤이 인터랙티브 창업, 대표이사', '‘AI 콘텐츠 + 틱톡 유입’ 고객 확보 모델 구축', '전 넷이즈게임즈·빙촨네트워크 광고 디자이너']],
-      ['호', '호접', 'HU DIE', '시장·공급망 총괄', ['한·중 시장 조사, 고객 인터뷰', '단위 경제성·전환·재구매 데이터 분석', '시제품·품질 관리, 위탁 공장·공급업체 개발']],
+      ['진', '진시우', 'CHEN SIYU', '프로젝트 총괄, 제품·성장', ['광쑤이 인터랙티브 창업, 대표이사', '‘AI 콘텐츠 + 틱톡 유입’ 고객 확보 모델 구축, 누적 조회 8,000만 회', '전 넷이즈게임즈·빙촨네트워크 광고 디자이너']],
+      ['호', '호접', 'HU DIE', '시장·공급망 총괄', ['한·중 시장 조사, 고객 인터뷰, 설문 153부 분석', '단위 경제성·전환·재구매 데이터 분석', '시제품·품질 관리, 위탁 공장·공급업체 개발']],
     ],
     finH: '휴대폰에서 전체 과정을 직접 해 보세요',
     finSub: '사진 업로드, 시안 선택, 3D 모델 돌려 보기, 컬러 카드 확인, 옵션 선택과 주문까지 데모에서 체험할 수 있습니다. AI 단계는 두두의 실측 결과로 대신합니다.',
@@ -505,6 +633,12 @@ function render() {
   $('#steps').innerHTML = t.steps.map(([h, p, tm, img, alt], i) => `<li class="step">
     <figure><img src="/demo/assets/${img}" alt="${esc(alt)}" loading="lazy" width="900" height="675"></figure>
     <span class="num" aria-hidden="true">${i + 1}</span><h3>${esc(h)}</h3><p>${esc(p)}</p><span class="time">${esc(tm)}</span></li>`).join('');
+  $('#prices').innerHTML = t.prices.map(([k, v, u, split, d]) => `<li class="pcard"><span class="k">${esc(k)}</span>
+    <span class="v">${esc(v)}<small>${esc(u)}</small></span><span class="split">${esc(split)}</span><p>${esc(d)}</p></li>`).join('');
+  $('#stats').innerHTML = t.stats.map(([n, d, bars]) => `<li class="stat"><span class="n">${esc(n)}</span><p>${esc(d)}</p>${bars ? `<div class="mini" role="img" aria-label="${esc(bars.map(([l, v]) => `${l} ${v}%`).join(', '))}">${bars.map(([l, v, hi]) => `<div class="${hi ? 'hi' : ''}"><span>${esc(l)}</span><span class="tr"><i style="width:${v}%"></i></span><b>${v}%</b></div>`).join('')}</div>` : ''}</li>`).join('');
+  $('#field').innerHTML = t.field.map((x) => `<li><span>${esc(x)}</span></li>`).join('');
+  $('#phases').innerHTML = t.phases.map(([w, h, d, tag], i) => `<li class="phase"><div class="top"><span class="num" aria-hidden="true">${i + 1}</span><span class="when">${esc(w)}</span></div>
+    <h3>${esc(h)}</h3><p>${esc(d)}</p><div class="tag"><span>${esc(tag)}</span></div></li>`).join('');
   $('#cmp').innerHTML = `<thead><tr><th scope="col"><span class="sr"></span></th>${t.cols.map(([c, s], i) => `<th scope="col" class="${i === 0 ? 'us' : ''}">${i === 0 ? `<span class="wordmark" style="color:var(--ink);font-size:20px;margin:0">${esc(c)}</span>` : esc(c)}${s ? `<span>${esc(s)}</span>` : ''}</th>`).join('')}</tr></thead>
     <tbody>${t.rows.map(([label, ...vals]) => `<tr><th scope="row">${esc(label)}</th>${vals.map((v, i) => `<td class="${i === 0 ? 'us' : ''}">${i === 0 ? `<strong>${cell(v)}</strong>` : cell(v)}</td>`).join('')}</tr>`).join('')}</tbody>`;
   const total = t.legend.reduce((a, [n]) => a + n, 0);
